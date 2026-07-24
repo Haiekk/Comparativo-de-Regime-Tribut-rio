@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+        <div>
+            <span class="dv-eyebrow">Etapa 3 · Resultado</span>
+            <h2>{{ empresa.razao_social }}</h2>
+            <p class="mb-0">CNPJ {{ empresa.cnpj }} · Receita bruta analisada R$ {{ resultado.receita }}</p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary dv-nao-imprimir" onclick="window.print()">
+            Imprimir relatório
+        </button>
+    </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- ECONOMIA -->
+<!-- ===================================================== -->
+
+<section class="dv-resumo">
+
+    <span class="dv-eyebrow">Economia estimada</span>
+
+    <div class="dv-valor">R$ {{ resultado.economia }}</div>
+
+    <p>
+        Redução de <strong>{{ resultado.reducao }}%</strong> na carga tributária ao
+        migrar de {{ resultado.regime_atual }} para {{ resultado.regime_novo }}.
+    </p>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- COMPARATIVO DIRETO -->
+<!-- ===================================================== -->
+
+<div class="row g-4 mt-1">
+
+    <div class="col-md-6">
+        <div class="dv-kpi dv-kpi--atual">
+            <div class="dv-kpi-rot">Regime atual · {{ resultado.regime_atual }}</div>
+            <div class="dv-kpi-val">R$ {{ resultado.tributo_atual }}</div>
+            <div class="dv-kpi-rot mt-2">Carga efetiva {{ resultado.percentual_atual }}%</div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="dv-kpi dv-kpi--novo">
+            <div class="dv-kpi-rot">
+                Regime simulado · {{ resultado.regime_novo }}
+                <span class="badge bg-success ms-1">Recomendado</span>
+            </div>
+            <div class="dv-kpi-val">R$ {{ resultado.tributo_novo }}</div>
+            <div class="dv-kpi-rot mt-2">Carga efetiva {{ resultado.percentual_novo }}%</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- COMPARATIVO DE REGIMES -->
+<!-- ===================================================== -->
+
+<div class="dv-card mt-4">
+
+    <div class="dv-card-topo">
+        <span class="dv-marcador"></span>
+        <h5 class="card-title">Comparativo de regimes</h5>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Indicador</th>
+                    {% for p in prefixos %}
+                    <th class="text-center {% if tabela_recomendado[p] %}dv-col-destaque{% endif %}">
+                        {{ nomes_regimes[p] }}
+                        {% if tabela_recomendado[p] %}
+                            <span class="badge bg-success ms-1">Recomendado</span>
+                        {% endif %}
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in tabela_comparativo %}
+                <tr>
+                    <td>{{ linha.rotulo }}</td>
+                    {% for p in prefixos %}
+                    <td class="text-center {% if tabela_recomendado[p] %}dv-col-destaque{% endif %}">{{ linha[p] }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- DRE COMPARATIVA -->
+<!-- ===================================================== -->
+
+<div class="dv-card mt-4">
+
+    <div class="dv-card-topo">
+        <span class="dv-marcador"></span>
+        <h5 class="card-title">DRE comparativa</h5>
+    </div>
+
+    <div class="dv-card-corpo pb-0">
+        <p class="dv-painel-nota mt-0">
+            Receita bruta mensal: <strong>R$ {{ tabela_dre.receita_bruta_mensal }}</strong>
+        </p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Indicador</th>
+                    {% for p in prefixos %}
+                    <th class="text-center">{{ nomes_regimes[p] }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in tabela_dre.linhas %}
+                <tr>
+                    <td>{{ linha.rotulo }}</td>
+                    {% for p in prefixos %}
+                    <td class="text-center">
+                        {% if linha[p].is_das %}
+                            <span class="dv-valor-neutro">Incluído no DAS</span>
+                        {% else %}
+                            {{ linha[p].valor }}
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="d-flex justify-content-center mt-5 dv-nao-imprimir">
+    <a href="{{ url_for('novo_processo') }}" class="btn btn-primary btn-lg">
+        Iniciar nova simulação
+    </a>
+</div>
+
+{% endblock %}

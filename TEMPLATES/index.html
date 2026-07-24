@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="dv-hero">
+
+    <span class="dv-eyebrow dv-eyebrow--claro">Simulador de regimes tributários</span>
+
+    <h1>Descubra em <em>3 etapas</em> qual regime custa menos para a sua empresa.</h1>
+
+    <p>
+        Informe os dados da empresa e as premissas do período. O simulador
+        compara Simples Nacional, Lucro Presumido e Lucro Real com a mesma base
+        de receitas, créditos e folha, e mostra a diferença em reais.
+    </p>
+
+    <a href="/novo" class="btn btn-dv-lima btn-lg">Iniciar planejamento</a>
+
+    <ul class="dv-hero-lista">
+        <li>
+            <strong>Comparativo de regimes</strong>
+            <span>Carga efetiva lado a lado, com o regime recomendado destacado.</span>
+        </li>
+        <li>
+            <strong>DRE comparativa</strong>
+            <span>Resultado depois dos tributos em cada cenário simulado.</span>
+        </li>
+        <li>
+            <strong>Economia estimada</strong>
+            <span>Quanto a mudança de regime representa no ano.</span>
+        </li>
+    </ul>
+
+</section>
+
+<div class="row g-4 mt-1">
+
+    <div class="col-lg-4">
+        <div class="dv-card h-100">
+            <div class="dv-card-topo">
+                <span class="dv-marcador"></span>
+                <h5 class="card-title">Etapa 1 · Empresa</h5>
+            </div>
+            <div class="dv-card-corpo">
+                Razão social, CNPJ, localização, atividade e o regime em que a
+                empresa está hoje.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="dv-card h-100">
+            <div class="dv-card-topo">
+                <span class="dv-marcador"></span>
+                <h5 class="card-title">Etapa 2 · Premissas</h5>
+            </div>
+            <div class="dv-card-corpo">
+                Receitas, créditos tributários, custos, despesas e folha de
+                pagamento do período analisado.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="dv-card h-100">
+            <div class="dv-card-topo">
+                <span class="dv-marcador"></span>
+                <h5 class="card-title">Etapa 3 · Resultado</h5>
+            </div>
+            <div class="dv-card-corpo">
+                Comparativo entre regimes, DRE por cenário e a economia
+                estimada com a troca.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

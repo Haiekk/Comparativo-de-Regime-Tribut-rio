@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Simulador Tributário · dvolv{% endblock %}</title>
+
+<link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="dv-topo dv-nao-imprimir">
+    <div class="container">
+        <span>Inteligência tributária aplicada a resultado</span>
+        <a href="tel:+5518996570360">(18) 99657-0360</a>
+    </div>
+</div>
+
+<header class="dv-nav dv-nao-imprimir">
+    <div class="container">
+
+        <a class="dv-marca" href="/">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="dvolv Inteligência Tributária">
+            <span>Simulador tributário</span>
+        </a>
+
+        <nav class="dv-nav-links">
+            <a href="/">Início</a>
+            <a href="https://www.dvolv.com.br/programa-de-planejamento-tribut%C3%A1rio" target="_blank" rel="noopener">Nossa solução</a>
+            <a href="https://www.dvolv.com.br/blog" target="_blank" rel="noopener">Blog</a>
+            <a href="/novo" class="btn btn-dv">Novo planejamento</a>
+        </nav>
+
+    </div>
+</header>
+
+<div class="dv-trilha dv-nao-imprimir"></div>
+
+<main class="dv-main">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<footer class="dv-rodape dv-nao-imprimir">
+    <div class="container">
+        <span>© dvolv Inteligência Tributária · Simulação com finalidade comparativa, não substitui a análise de um especialista.</span>
+        <a href="https://www.dvolv.com.br/" target="_blank" rel="noopener">dvolv.com.br</a>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

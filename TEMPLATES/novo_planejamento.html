@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <span class="dv-eyebrow">Novo planejamento</span>
+    <h2>Dados da empresa</h2>
+    <p>Identifique a empresa analisada. Esses dados aparecem no relatório final.</p>
+</div>
+
+<ol class="dv-etapas">
+    <li class="ativa">
+        <span class="dv-etapa-n">01</span>
+        <span class="dv-etapa-t">Empresa</span>
+    </li>
+    <li>
+        <span class="dv-etapa-n">02</span>
+        <span class="dv-etapa-t">Premissas</span>
+    </li>
+    <li>
+        <span class="dv-etapa-n">03</span>
+        <span class="dv-etapa-t">Resultado</span>
+    </li>
+</ol>
+
+{% if erros %}
+<div class="alert alert-danger" role="alert">
+    <ul class="mb-0">
+    {% for e in erros %}
+        <li>{{ e }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form method="POST">
+
+<div class="dv-card">
+
+    <div class="dv-card-topo">
+        <span class="dv-marcador"></span>
+        <h5 class="card-title">Identificação</h5>
+    </div>
+
+    <div class="dv-card-corpo">
+
+        <div class="row g-4">
+
+            <div class="col-12">
+                <label class="form-label" for="razao_social">Razão social *</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="razao_social"
+                    name="razao_social"
+                    placeholder="Ex.: ABC Comércio Ltda"
+                    required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" for="cnpj">CNPJ *</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="cnpj"
+                    id="cnpj"
+                    placeholder="00.000.000/0000-00"
+                    required>
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label" for="email">E-mail</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="empresa@email.com">
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label" for="cidade">Cidade</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="cidade"
+                    name="cidade">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" for="estado">Estado</label>
+                <select class="form-select" id="estado" name="estado">
+                    <option value="">Selecione</option>
+                    <option>AC</option>
+                    <option>AL</option>
+                    <option>AP</option>
+                    <option>AM</option>
+                    <option>BA</option>
+                    <option>CE</option>
+                    <option>DF</option>
+                    <option>ES</option>
+                    <option>GO</option>
+                    <option>MA</option>
+                    <option>MT</option>
+                    <option>MS</option>
+                    <option>MG</option>
+                    <option>PA</option>
+                    <option>PB</option>
+                    <option>PR</option>
+                    <option>PE</option>
+                    <option>PI</option>
+                    <option>RJ</option>
+                    <option>RN</option>
+                    <option>RS</option>
+                    <option>RO</option>
+                    <option>RR</option>
+                    <option>SC</option>
+                    <option>SP</option>
+                    <option>SE</option>
+                    <option>TO</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="dv-card mt-4">
+
+    <div class="dv-card-topo">
+        <span class="dv-marcador"></span>
+        <h5 class="card-title">Enquadramento</h5>
+    </div>
+
+    <div class="dv-card-corpo">
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+                <label class="form-label" for="atividade">Atividade</label>
+                <select class="form-select" id="atividade" name="atividade">
+                    <option>Comércio</option>
+                    <option>Serviços</option>
+                    <option>Comércio + Serviços</option>
+                    <option>Indústria</option>
+                    <option>Produtor Rural</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label" for="regime_atual">Regime atual</label>
+                <select class="form-select" id="regime_atual" name="regime_atual">
+                    <option>Simples Nacional</option>
+                    <option>Lucro Presumido</option>
+                    <option>Lucro Real</option>
+                </select>
+                <small class="text-muted">Base de comparação para a economia estimada.</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="dv-acoes">
+    <a href="/" class="btn btn-outline-secondary btn-lg">Cancelar</a>
+    <button type="submit" class="btn btn-primary btn-lg">Continuar para premissas →</button>
+</div>
+
+</form>
+
+{% endblock %}

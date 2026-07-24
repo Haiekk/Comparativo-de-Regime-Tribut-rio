@@ -1,0 +1,29 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# --- Ambiente e segredos ---
+.env
+.env.*
+instance/
+
+# --- Dados de cliente (NUNCA versionar) ---
+flask_session/
+TEMP/
+
+# --- Planilhas ---
+*.xlsx
+*.xlsm
+~$*
+!EXCEL/modelo_limpo.xlsx
+
+# --- SO / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
