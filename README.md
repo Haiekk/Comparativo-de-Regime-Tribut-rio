@@ -121,7 +121,6 @@ O site sobe em **http://127.0.0.1:5000**.
 > testar na sua máquina. Em produção o app é servido pelo Gunicorn (ver
 > [Publicação no Render](#publicação-no-render)).
 
-
 ---
 
 ## Publicação no Render
