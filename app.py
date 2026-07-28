@@ -22,21 +22,6 @@ Session(app)
 
 logging.basicConfig(level=logging.INFO)
 
-@app.route("/debug-static")
-def debug_static():
-    import os
-    info = {
-        "static_folder": app.static_folder,
-        "existe": os.path.isdir(app.static_folder) if app.static_folder else False,
-    }
-    if info["existe"]:
-        info["conteudo_raiz"] = os.listdir(app.static_folder)
-        css_dir = os.path.join(app.static_folder, "css")
-        info["existe_css"] = os.path.isdir(css_dir)
-        if info["existe_css"]:
-            info["conteudo_css"] = os.listdir(css_dir)
-    return info
-
 PREFIXOS = ["simples", "presumido", "real"]
 NOMES_REGIMES = {
     "simples": "Simples Nacional",
