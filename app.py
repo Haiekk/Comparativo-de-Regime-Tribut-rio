@@ -7,7 +7,12 @@ from flask_session import Session
 from SERVICES.calculo_service import processar
 from SERVICES.utils import parse_moeda, num, texto
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "static"),
+    template_folder=os.path.join(BASE_DIR, "templates"),
+)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao")
 
 app.config["SESSION_TYPE"] = "filesystem"
