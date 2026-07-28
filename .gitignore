@@ -2,28 +2,26 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
-.venv/
+.Python
+
+# --- Ambiente virtual ---
 venv/
 env/
-.pytest_cache/
+.venv/
 
-# --- Ambiente e segredos ---
-.env
-.env.*
-instance/
-
-# --- Dados de cliente (NUNCA versionar) ---
+# --- Sessões do Flask (geradas em disco em runtime) ---
 flask_session/
+
+# --- Segredos / variáveis de ambiente ---
+.env
+*.env
+
+# --- Resíduos da versão antiga (Excel) ---
+EXCEL/
 TEMP/
 
-# --- Planilhas ---
-*.xlsx
-*.xlsm
-~$*
-!EXCEL/modelo_limpo.xlsx
-
-# --- SO / editor ---
-.DS_Store
-Thumbs.db
+# --- Editor / SO ---
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db

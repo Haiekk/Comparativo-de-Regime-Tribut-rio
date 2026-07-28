@@ -1,12 +1,11 @@
 import logging
 import os
-import uuid
-import threading
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_session import Session
 
-from SERVICES.excel_service import ExcelService, ErroPlanilha, num, texto
+from SERVICES.calculo_service import processar
+from SERVICES.utils import parse_moeda, num, texto
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao")
@@ -16,22 +15,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_FILE_DIR"] = os.path.join(app.root_path, "flask_session")
 Session(app)
 
-TAREFAS_EXCEL = {}
-
-def executar_calculo_background(task_id, dados):
-    try:
-        resultado = ExcelService().processar(dados)
-        TAREFAS_EXCEL[task_id] = {"status": "concluido", "resultado": resultado}
-    except ErroPlanilha as erro:
-        TAREFAS_EXCEL[task_id] = {"status": "erro", "mensagem": str(erro)}
-    except Exception as erro:
-        app.logger.exception("Falha na thread de background")
-        TAREFAS_EXCEL[task_id] = {"status": "erro", "mensagem": "Erro inesperado ao calcular."}
-
 logging.basicConfig(level=logging.INFO)
-
-LIMITE_SIMPLES = 4_800_000.0
-SUBLIMITE_ICMS_ISS = 3_600_000.0
 
 PREFIXOS = ["simples", "presumido", "real"]
 NOMES_REGIMES = {
@@ -76,8 +60,6 @@ def identificar_regime_atual(rotulo):
 
 def validar_premissas(form):
     erros, avisos = [], []
-
-    from SERVICES.excel_service import parse_moeda
 
     receita = sum(parse_moeda(form.get(c)) for c in
                   ("receita_comercio", "receita_servicos", "receita_sem_nota"))
@@ -136,85 +118,40 @@ def premissas():
         return render_template("premissas.html", erros=erros, form=request.form)
 
     session["premissas"] = {c: request.form.get(c) for c in CAMPOS_PREMISSAS}
-    session["avisos_iniciais"] = avisos
 
     dados = {**session["empresa"], **session["premissas"]}
 
-    task_id = str(uuid.uuid4())
-    TAREFAS_EXCEL[task_id] = {"status": "processando"}
+    # Cálculo síncrono — Python puro, instantâneo. Sem thread, sem Excel.
+    try:
+        resultado_calc = processar(dados)
+    except Exception:
+        app.logger.exception("Falha no cálculo do comparativo")
+        return render_template(
+            "premissas.html",
+            erros=["Não foi possível concluir o cálculo. Revise as premissas e tente novamente."],
+            form=request.form,
+        )
 
-    thread = threading.Thread(target=executar_calculo_background, args=(task_id, dados))
-    thread.start()
+    # Avisos = validação de entrada (RBT12 vs. receita) + avisos do motor (limites do Simples)
+    avisos = avisos + resultado_calc["meta"]["avisos"]
 
-    return redirect(url_for("processando", task_id=task_id))
+    session["resultado"] = montar_resumo(resultado_calc, avisos)
+    session["tabela_comparativo"], session["tabela_recomendado"] = montar_tabela_comparativo(resultado_calc)
+    session["tabela_dre"] = montar_tabela_dre(resultado_calc)
 
-@app.route("/processando/<task_id>")
-def processando(task_id):
-    """Renderiza a tela de loading enquanto o Excel trabalha"""
-    if task_id not in TAREFAS_EXCEL:
-        return redirect(url_for("premissas"))
-    return render_template("processando.html", task_id=task_id)
+    return redirect(url_for("resultado"))
 
-@app.route("/status/<task_id>")
-def status_processamento(task_id):
-    """Endpoint que o navegador consulta a cada 2 segundos via JS"""
-    tarefa = TAREFAS_EXCEL.get(task_id)
-    
-    if not tarefa:
-        return jsonify({"status": "erro", "mensagem": "Tarefa não encontrada ou expirada."})
-        
-    if tarefa["status"] == "concluido":
-        resultado_excel = tarefa["resultado"]
-        avisos = session.get("avisos_iniciais", [])
-        
-        session["resultado"] = montar_resumo(resultado_excel, avisos)
-        session["tabela_comparativo"], session["tabela_recomendado"] = montar_tabela_comparativo(resultado_excel)
-        session["tabela_dre"] = montar_tabela_dre(resultado_excel)
-        
-        del TAREFAS_EXCEL[task_id] 
-        return jsonify({"status": "concluido", "redirect": url_for("resultado")})
-        
-    elif tarefa["status"] == "erro":
-        mensagem = tarefa["mensagem"]
-        del TAREFAS_EXCEL[task_id]
-        return jsonify({"status": "erro", "mensagem": mensagem})
-        
-    return jsonify({"status": "processando"})
 
-def montar_resumo(resultado_excel, avisos=None):
-    comparativo = resultado_excel.get("comparativo", {})
-    dre = resultado_excel.get("dre", {})
+def montar_resumo(resultado_calc, avisos=None):
+    comparativo = resultado_calc.get("comparativo", {})
+    dre = resultado_calc.get("dre", {})
+    meta = resultado_calc.get("meta", {})
     avisos = list(avisos or [])
 
+    # Regime atual = informado pela empresa; recomendado = decidido pelo motor
+    # (maior lucro entre os elegíveis, já respeitando o teto do Simples).
     prefixo_atual = identificar_regime_atual(session["empresa"].get("regime_atual"))
-
-    rbt12 = num(session["premissas"].get("rbt12"))
-    if isinstance(session["premissas"].get("rbt12"), str):
-        from SERVICES.excel_service import parse_moeda
-        rbt12 = parse_moeda(session["premissas"]["rbt12"])
-
-    simples_elegivel = rbt12 <= LIMITE_SIMPLES
-    if not simples_elegivel:
-        avisos.append(
-            f"RBT12 de R$ {formatar_moeda(rbt12)} ultrapassa o teto do Simples Nacional "
-            f"(R$ {formatar_moeda(LIMITE_SIMPLES)}). O regime foi excluído da comparação."
-        )
-    elif rbt12 > SUBLIMITE_ICMS_ISS:
-        avisos.append(
-            f"RBT12 acima do sublimite de R$ {formatar_moeda(SUBLIMITE_ICMS_ISS)}: "
-            "no Simples, ICMS e ISS passam a ser recolhidos por fora do DAS. "
-            "A simulação ainda não considera esse recolhimento adicional."
-        )
-
-    candidatos = [p for p in PREFIXOS if p != "simples" or simples_elegivel]
-    prefixo_novo = max(candidatos, key=lambda p: num(comparativo.get(f"{p}_lucro")))
-
-    marcado = [p for p in PREFIXOS if texto(comparativo.get(f"{p}_recomendado"))]
-    if marcado and marcado[0] != prefixo_novo:
-        app.logger.warning(
-            "Divergência de recomendação: planilha aponta %s, cálculo aponta %s",
-            marcado[0], prefixo_novo,
-        )
+    prefixo_novo = meta.get("regime_recomendado")
 
     tributo_atual = num(comparativo.get(f"{prefixo_atual}_total_impostos"))
     tributo_novo = num(comparativo.get(f"{prefixo_novo}_total_impostos"))
@@ -243,6 +180,7 @@ def montar_resumo(resultado_excel, avisos=None):
         "reducao": round(max(reducao, 0.0), 2),
         "avisos": avisos,
     }
+
 
 LINHAS_COMPARATIVO = [
     ("DAS / IRPJ", "das_irpj", "detalhamento", "moeda"),
@@ -283,10 +221,11 @@ LINHAS_DRE = [
     ("Margem Líquida (% sobre a Receita)", "margem", "pct"),
 ]
 
-def montar_tabela_comparativo(resultado_excel):
+
+def montar_tabela_comparativo(resultado_calc):
     origens = {
-        "detalhamento": resultado_excel.get("detalhamento", {}),
-        "comparativo": resultado_excel.get("comparativo", {}),
+        "detalhamento": resultado_calc.get("detalhamento", {}),
+        "comparativo": resultado_calc.get("comparativo", {}),
     }
     comparativo = origens["comparativo"]
 
@@ -303,30 +242,31 @@ def montar_tabela_comparativo(resultado_excel):
     return tabela, recomendado
 
 
-def montar_tabela_dre(resultado_excel):
-    dre = resultado_excel.get("dre", {})
+def montar_tabela_dre(resultado_calc):
+    dre = resultado_calc.get("dre", {})
     linhas = []
-    
+
     tributos_simples = ["icms", "iss", "pis", "cofins", "irpj", "csll"]
-    
+
     for rotulo, sufixo, tipo in LINHAS_DRE:
         linha = {"rotulo": rotulo}
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
-            
+
             if p == "simples" and sufixo in tributos_simples and num(valor) == 0:
                 linha[p] = {"is_das": True, "valor": ""}
             elif tipo == "pct":
                 linha[p] = {"is_das": False, "valor": f"{percentual(valor)}%"}
             else:
                 linha[p] = {"is_das": False, "valor": f"R$ {formatar_moeda(num(valor))}"}
-        
+
         linhas.append(linha)
 
     return {
         "receita_bruta_mensal": formatar_moeda(num(dre.get("receita_bruta_mensal"))),
         "linhas": linhas
     }
+
 
 @app.route("/resultado")
 def resultado():
