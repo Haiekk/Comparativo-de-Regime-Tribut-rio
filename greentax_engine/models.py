@@ -1,10 +1,4 @@
-"""
-Premissas de entrada do simulador — espelham as CÉLULAS DE INPUT da aba
-'Dados do Cliente'. Tudo que o usuário informa no formulário Flask vira
-um objeto Premissas; nenhuma regra de cálculo mora aqui.
-"""
 from dataclasses import dataclass, field
-
 
 @dataclass
 class Premissas:
@@ -13,9 +7,6 @@ class Premissas:
     fat_servicos: float          # B11
     fat_sem_nota: float = 0.0    # B12
 
-    # RBT12 (receita bruta dos últimos 12 meses).
-    # NOTA: na planilha B14 está CRAVADO (1.709.693,51) e NÃO é B13*12.
-    # Aqui ele é um input explícito — que é o correto para um simulador.
     rbt12: float = 0.0           # B14
 
     # --- Despesas / custos operacionais ---
@@ -30,8 +21,6 @@ class Premissas:
     desp_alimentacao: float = 0.0           # B40
     outras_desp_operacionais: float = 0.0   # B41
 
-    # --- Base de créditos PIS/COFINS (bloco Controle de Créditos) ---
-    # Bases sobre as quais incidem 1,65% (PIS) e 7,6% (COFINS).
     bases_credito: list = field(default_factory=list)  # C18:D28
 
     # --- Folha ---

@@ -26,7 +26,6 @@ def calcular(p: Premissas) -> dict:
     icms_credito = p.compras_revenda * p.icms
     icms_recolher = max(icms_debito - icms_credito, 0)
 
-    # ISS sobre serviços
     iss = (p.fat_servicos + p.fat_sem_nota) * p.iss
 
     total = irpj_total + csll + pis + cofins + icms_recolher + iss

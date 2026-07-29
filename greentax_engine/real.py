@@ -1,4 +1,3 @@
-"""Lucro Real — aba 'Lucro Real'. PIS/COFINS não-cumulativos + IRPJ/CSLL sobre lucro apurado."""
 from .models import Premissas
 from .creditos import creditos_pis_cofins
 from .folha import custo_folha_presumido_real

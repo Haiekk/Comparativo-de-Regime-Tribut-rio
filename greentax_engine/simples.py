@@ -1,4 +1,3 @@
-"""Simples Nacional — aba 'Simples Nacional'. Segregado por atividade."""
 from .models import Premissas
 from .tabelas import ANEXO_I, ANEXO_III, faixa_simples
 from .folha import custo_folha_simples

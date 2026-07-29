@@ -1,15 +1,3 @@
-"""
-Parâmetros tributários como DADOS, não como código.
-
-Fonte: Lei Complementar 123/2006 (Anexos I e III, vigência 2025) e legislação
-federal de PIS/COFINS/IRPJ/CSLL. Centralizar aqui permite versionar por ano
-sem caçar números soltos dentro das fórmulas.
-"""
-
-# ---------------------------------------------------------------------------
-# Simples Nacional — faixas (rbt12_minima, aliquota_nominal, parcela_deduzir)
-# Espelha a aba 'Tabelas Simples'.
-# ---------------------------------------------------------------------------
 ANEXO_I = [   # Comércio (venda de peças)
     (0.00,         0.040,   0.00),
     (180_000.01,   0.073,   5_940.00),
@@ -28,23 +16,14 @@ ANEXO_III = [  # Serviços (instalação, reparos e manutenção)
     (3_600_000.01, 0.330,   648_000.00),
 ]
 
-# ---------------------------------------------------------------------------
-# Limites do Simples Nacional
-# ---------------------------------------------------------------------------
 LIMITE_SIMPLES = 4_800_000.00        # teto: acima disso a empresa é desenquadrada
 SUBLIMITE_ICMS_ISS_SP = 3_600_000.00  # sublimite (SP): ICMS/ISS passam a ser recolhidos por fora do DAS
 
-# ---------------------------------------------------------------------------
-# PIS / COFINS
-# ---------------------------------------------------------------------------
 PIS_CUMULATIVO = 0.0065      # Lucro Presumido (sem crédito)
 COFINS_CUMULATIVO = 0.03
 PIS_NAO_CUMULATIVO = 0.0165  # Lucro Real (com crédito)
 COFINS_NAO_CUMULATIVO = 0.076
 
-# ---------------------------------------------------------------------------
-# IRPJ / CSLL
-# ---------------------------------------------------------------------------
 IRPJ_ALIQUOTA = 0.15
 IRPJ_ADICIONAL = 0.10
 IRPJ_ADICIONAL_LIMITE = 20_000.00   # base mensal a partir da qual incide o adicional
@@ -58,10 +37,7 @@ PRESUMIDO_BASE_CSLL_SERVICOS = 0.32
 
 
 def faixa_simples(tabela, rbt12):
-    """
-    Reproduz INDEX(..., MATCH(rbt12, faixas, 1)): devolve a última faixa cuja
-    RBT12 mínima é <= rbt12. Retorna (aliquota_nominal, parcela_deduzir).
-    """
+
     escolhida = tabela[0]
     for minima, aliq, deduzir in tabela:
         if rbt12 >= minima:

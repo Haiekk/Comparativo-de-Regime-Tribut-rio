@@ -1,9 +1,3 @@
-"""
-Utilidades de conversão — a ponte entre as strings que o formulário envia
-e os números que o motor espera. `parse_moeda` foi preservada do antigo
-excel_service (funcionava bem); `num`/`texto` são as versões enxutas, sem a
-lógica de códigos de erro do Excel (que deixaram de existir).
-"""
 import logging
 import re
 

@@ -1,19 +1,6 @@
-"""
-Adaptador form -> Premissas.
-
-Reconcilia os nomes dos campos do formulário (que espelhavam as células da
-planilha) com os nomes do motor. Toda conversão string->número passa pelo
-parse_moeda. Campos não coletados pelo formulário (desp_alimentacao,
-outras_desp_operacionais e as alíquotas ICMS/ISS/INSS/RAT/Sistema S) NÃO
-aparecem aqui — assumem os valores-padrão definidos na dataclass Premissas.
-"""
 from greentax_engine import Premissas
 from .utils import parse_moeda
 
-# Bloco "Controle de Créditos" (B18:B28). Todas as linhas recebem
-# PIS 1,65% + COFINS 7,6%, então somam numa base única de crédito.
-# ATENÇÃO: 'mercadorias_revenda' (crédito, B18) é campo distinto de
-# 'compras' (despesa/CMV, B32), mesmo que tenham o mesmo valor no exemplo.
 CAMPOS_CREDITO = [
     "mercadorias_revenda", "aluguel_pj", "frete_compras", "frete_vendas",
     "servicos_terceiros", "combustiveis", "epis", "energia", "depreciacao",
