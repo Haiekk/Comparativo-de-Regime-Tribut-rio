@@ -112,6 +112,7 @@ def novo_planejamento():
 
 @app.route("/premissas", methods=["GET", "POST"])
 def premissas():
+
     if "empresa" not in session:
         return redirect(url_for("novo_planejamento"))
 
@@ -126,7 +127,6 @@ def premissas():
 
     dados = {**session["empresa"], **session["premissas"]}
 
-    # Cálculo síncrono — Python puro, instantâneo. Sem thread, sem Excel.
     try:
         resultado_calc = processar(dados)
     except Exception:
@@ -137,7 +137,6 @@ def premissas():
             form=request.form,
         )
 
-    # Avisos = validação de entrada (RBT12 vs. receita) + avisos do motor (limites do Simples)
     avisos = avisos + resultado_calc["meta"]["avisos"]
 
     session["resultado"] = montar_resumo(resultado_calc, avisos)

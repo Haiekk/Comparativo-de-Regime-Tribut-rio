@@ -1,12 +1,3 @@
-/* =====================================================
-   dvolv · Simulador Tributário
-   Comportamentos de interface. Nenhuma regra de cálculo
-   é executada aqui — os valores seguem para o backend
-   exatamente no mesmo formato de antes.
-   ===================================================== */
-
-/* --- Máscara de CNPJ (inalterada) --- */
-
 const cnpj = document.getElementById("cnpj");
 if (cnpj) {
   cnpj.addEventListener("input", (e) => {
@@ -19,8 +10,6 @@ if (cnpj) {
   });
 }
 
-/* --- Máscara monetária (inalterada) --- */
-
 document.querySelectorAll(".money").forEach(function(input){
     input.addEventListener("input", function(e){
         let value = e.target.value.replace(/\D/g,'');
@@ -31,16 +20,12 @@ document.querySelectorAll(".money").forEach(function(input){
     });
 });
 
-/* --- Estado visual do campo preenchido (só CSS) --- */
-
 document.querySelectorAll(".money").forEach(function(input){
     const marcar = () => input.classList.toggle("preenchido", input.value.trim() !== "");
     input.addEventListener("input", marcar);
     input.addEventListener("blur", marcar);
     marcar();
 });
-
-/* --- Botão de envio: evita duplo clique enquanto calcula --- */
 
 document.querySelectorAll("form").forEach(function(form){
     form.addEventListener("submit", function(){
