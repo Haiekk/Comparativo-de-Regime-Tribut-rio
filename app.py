@@ -40,14 +40,12 @@ CAMPOS_PREMISSAS = [
     "folha_pagamento", "ticket_alimentacao",
 ]
 
-
 def formatar_moeda(valor):
     try:
         valor = float(valor)
     except (TypeError, ValueError):
         valor = 0.0
     return f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
 
 def percentual(valor):
     v = num(valor)
@@ -61,7 +59,6 @@ def identificar_regime_atual(rotulo):
     if "real" in rotulo:
         return "real"
     return "simples"
-
 
 def validar_premissas(form):
     erros, avisos = [], []
@@ -79,11 +76,9 @@ def validar_premissas(form):
 
     return erros, avisos
 
-
 @app.route("/")
 def dashboard():
     return render_template("index.html")
-
 
 @app.route("/novo", methods=["GET", "POST"])
 def novo_planejamento():
@@ -108,7 +103,6 @@ def novo_planejamento():
         return redirect(url_for("premissas"))
 
     return render_template("novo_planejamento.html", form={})
-
 
 @app.route("/premissas", methods=["GET", "POST"])
 def premissas():
@@ -144,7 +138,6 @@ def premissas():
     session["tabela_dre"] = montar_tabela_dre(resultado_calc)
 
     return redirect(url_for("resultado"))
-
 
 def montar_resumo(resultado_calc, avisos=None):
     comparativo = resultado_calc.get("comparativo", {})
@@ -185,7 +178,6 @@ def montar_resumo(resultado_calc, avisos=None):
         "avisos": avisos,
     }
 
-
 LINHAS_COMPARATIVO = [
     ("DAS / IRPJ", "das_irpj", "detalhamento", "moeda"),
     ("CSLL", "csll", "detalhamento", "moeda"),
@@ -225,7 +217,6 @@ LINHAS_DRE = [
     ("Margem Líquida (% sobre a Receita)", "margem", "pct"),
 ]
 
-
 def montar_tabela_comparativo(resultado_calc):
     origens = {
         "detalhamento": resultado_calc.get("detalhamento", {}),
@@ -244,7 +235,6 @@ def montar_tabela_comparativo(resultado_calc):
 
     recomendado = {p: bool(texto(comparativo.get(f"{p}_recomendado"))) for p in PREFIXOS}
     return tabela, recomendado
-
 
 def montar_tabela_dre(resultado_calc):
     dre = resultado_calc.get("dre", {})
@@ -271,7 +261,6 @@ def montar_tabela_dre(resultado_calc):
         "linhas": linhas
     }
 
-
 @app.route("/resultado")
 def resultado():
     if "resultado" not in session:
@@ -287,12 +276,10 @@ def resultado():
         prefixos=PREFIXOS,
     )
 
-
 @app.route("/novo-processo")
 def novo_processo():
     session.clear()
     return redirect(url_for("novo_planejamento"))
-
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5000)
