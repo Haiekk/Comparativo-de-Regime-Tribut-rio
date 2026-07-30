@@ -2,37 +2,33 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Premissas:
-    # --- Faturamento mensal ---
-    fat_comercio: float          # B10
-    fat_servicos: float          # B11
-    fat_sem_nota: float = 0.0    # B12
+    fat_comercio: float          
+    fat_servicos: float          
+    fat_sem_nota: float = 0.0    
 
-    rbt12: float = 0.0           # B14
+    rbt12: float = 0.0           
 
-    # --- Despesas / custos operacionais ---
-    compras_revenda: float = 0.0            # B32
-    outras_desp_dedutiveis: float = 0.0     # B33
-    desp_aluguel: float = 0.0               # B34
-    desp_mat_consumo: float = 0.0           # B35
-    desp_mat_limpeza: float = 0.0           # B36
-    desp_energia: float = 0.0               # B37
-    desp_financeiras: float = 0.0           # B38
-    desp_combustivel: float = 0.0           # B39
-    desp_alimentacao: float = 0.0           # B40
-    outras_desp_operacionais: float = 0.0   # B41
+    compras_revenda: float = 0.0            
+    outras_desp_dedutiveis: float = 0.0     
+    desp_aluguel: float = 0.0               
+    desp_mat_consumo: float = 0.0           
+    desp_mat_limpeza: float = 0.0           
+    desp_energia: float = 0.0               
+    desp_financeiras: float = 0.0           
+    desp_combustivel: float = 0.0           
+    desp_alimentacao: float = 0.0           
+    outras_desp_operacionais: float = 0.0   
 
     bases_credito: list = field(default_factory=list)  # C18:D28
 
-    # --- Folha ---
-    salario_bruto: float = 0.0   # B45  (total da folha)
-    ticket_alim: float = 0.0     # B46
+    salario_bruto: float = 0.0   
+    ticket_alim: float = 0.0     
 
-    # --- Alíquotas / parâmetros ---
-    icms: float = 0.12           # B47
-    iss: float = 0.04            # B48
-    inss_patronal: float = 0.20  # B49
-    rat: float = 0.03            # B50
-    sistema_s: float = 0.063     # B51
+    icms: float = 0.12           
+    iss: float = 0.04            
+    inss_patronal: float = 0.20  
+    rat: float = 0.03            
+    sistema_s: float = 0.063     
 
     @property
     def fat_total(self) -> float:

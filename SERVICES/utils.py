@@ -5,7 +5,6 @@ logger = logging.getLogger(__name__)
 
 
 def parse_moeda(valor):
-    """Interpreta valores monetários em formato BR ('1.234,56') ou US ('1234.56')."""
     if valor is None:
         return 0.0
     if isinstance(valor, (int, float)):
@@ -19,7 +18,6 @@ def parse_moeda(valor):
     pontos = texto.count(".")
 
     if virgulas and pontos:
-        # o separador mais à direita é o decimal
         if texto.rfind(",") > texto.rfind("."):
             texto = texto.replace(".", "").replace(",", ".")
         else:
@@ -27,7 +25,6 @@ def parse_moeda(valor):
     elif virgulas == 1:
         texto = texto.replace(",", ".")
     elif pontos == 1:
-        # um único ponto seguido de 3 dígitos é milhar (1.234), não decimal
         inteiro, _, fracao = texto.partition(".")
         if len(fracao) == 3 and fracao.isdigit():
             texto = inteiro + fracao
@@ -42,7 +39,6 @@ def parse_moeda(valor):
 
 
 def num(valor, padrao=0.0):
-    """Coage qualquer coisa para float com segurança (usado nas funções montar_*)."""
     if valor is None or valor == "":
         return padrao
     if isinstance(valor, bool):

@@ -25,7 +25,6 @@ def comparar(p: Premissas) -> dict:
         "real": receita - r["total_impostos"] - r["folha"] - desp - p.compras_revenda,
     }
 
-    # ---- Regra dos dois limites ----
     avisos = []
     simples_elegivel = p.rbt12 <= t.LIMITE_SIMPLES
     if not simples_elegivel:

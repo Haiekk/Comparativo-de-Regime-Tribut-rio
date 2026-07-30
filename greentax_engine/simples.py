@@ -12,15 +12,15 @@ def _das_anexo(rbt12, receita_mensal, tabela):
 
 
 def calcular(p: Premissas) -> dict:
-    anexo_i = _das_anexo(p.rbt12, p.fat_comercio, ANEXO_I)      # comércio
-    anexo_iii = _das_anexo(p.rbt12, p.fat_servicos, ANEXO_III)  # serviços
-    das_total = anexo_i["das"] + anexo_iii["das"]               # B21
+    anexo_i = _das_anexo(p.rbt12, p.fat_comercio, ANEXO_I)      
+    anexo_iii = _das_anexo(p.rbt12, p.fat_servicos, ANEXO_III)  
+    das_total = anexo_i["das"] + anexo_iii["das"]               
     return {
         "regime": "Simples Nacional",
         "anexo_i": anexo_i,
         "anexo_iii": anexo_iii,
         "das_total": das_total,
         "total_impostos": das_total,
-        "carga": das_total / p.fat_total,          # B22
+        "carga": das_total / p.fat_total,          
         "folha": custo_folha_simples(p),
     }

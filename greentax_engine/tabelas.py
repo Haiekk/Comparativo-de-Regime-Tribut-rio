@@ -1,4 +1,4 @@
-ANEXO_I = [   # Comércio (venda de peças)
+ANEXO_I = [  
     (0.00,         0.040,   0.00),
     (180_000.01,   0.073,   5_940.00),
     (360_000.01,   0.095,   13_860.00),
@@ -7,7 +7,7 @@ ANEXO_I = [   # Comércio (venda de peças)
     (3_600_000.01, 0.190,   378_000.00),
 ]
 
-ANEXO_III = [  # Serviços (instalação, reparos e manutenção)
+ANEXO_III = [  
     (0.00,         0.060,   0.00),
     (180_000.01,   0.112,   9_360.00),
     (360_000.01,   0.132,   17_640.00),
@@ -16,20 +16,19 @@ ANEXO_III = [  # Serviços (instalação, reparos e manutenção)
     (3_600_000.01, 0.330,   648_000.00),
 ]
 
-LIMITE_SIMPLES = 4_800_000.00        # teto: acima disso a empresa é desenquadrada
-SUBLIMITE_ICMS_ISS_SP = 3_600_000.00  # sublimite (SP): ICMS/ISS passam a ser recolhidos por fora do DAS
+LIMITE_SIMPLES = 4_800_000.00        
+SUBLIMITE_ICMS_ISS_SP = 3_600_000.00  
 
-PIS_CUMULATIVO = 0.0065      # Lucro Presumido (sem crédito)
+PIS_CUMULATIVO = 0.0065      
 COFINS_CUMULATIVO = 0.03
-PIS_NAO_CUMULATIVO = 0.0165  # Lucro Real (com crédito)
+PIS_NAO_CUMULATIVO = 0.0165  
 COFINS_NAO_CUMULATIVO = 0.076
 
 IRPJ_ALIQUOTA = 0.15
 IRPJ_ADICIONAL = 0.10
-IRPJ_ADICIONAL_LIMITE = 20_000.00   # base mensal a partir da qual incide o adicional
+IRPJ_ADICIONAL_LIMITE = 20_000.00   
 CSLL_ALIQUOTA = 0.09
 
-# Bases presumidas (Lucro Presumido)
 PRESUMIDO_BASE_IRPJ_COMERCIO = 0.08
 PRESUMIDO_BASE_IRPJ_SERVICOS = 0.32
 PRESUMIDO_BASE_CSLL_COMERCIO = 0.12

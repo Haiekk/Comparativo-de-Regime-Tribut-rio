@@ -1,18 +1,11 @@
-/* =====================================================
-   dvolv · Inteligência Tributária
-   Sistema visual do Simulador de Regimes Tributários
-   ===================================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root{
-  /* Marca */
   --dv-verde-escuro:#30682C;
   --dv-verde:#77B829;
   --dv-lima:#D4D800;
   --dv-cinza:#878786;
 
-  /* Neutros */
   --dv-grafite:#171C18;
   --dv-grafite-2:#232A24;
   --dv-tinta:#1B211C;
@@ -22,18 +15,15 @@
   --dv-fundo:#F5F7F3;
   --dv-branco:#FFFFFF;
 
-  /* Semânticos */
   --dv-alerta:#B3261E;
   --dv-atencao:#B07A12;
 
-  /* Gradiente assinatura (o rabo do check do logo) */
   --dv-trilha:linear-gradient(90deg,var(--dv-verde-escuro) 0%,var(--dv-verde) 45%,var(--dv-lima) 100%);
 
   --dv-raio:14px;
   --dv-raio-sm:9px;
   --dv-sombra:0 1px 2px rgba(23,28,24,.05),0 10px 28px -18px rgba(23,28,24,.35);
 
-  /* Overrides do Bootstrap */
   --bs-body-font-family:'Inter',system-ui,-apple-system,sans-serif;
   --bs-body-color:var(--dv-texto);
   --bs-body-bg:var(--dv-fundo);
@@ -54,7 +44,6 @@ body{
   flex-direction:column;
 }
 
-/* ---------- Tipografia ---------- */
 
 h1,h2,h3,h4,h5,.dv-display{
   font-family:'Jost',system-ui,sans-serif;
@@ -88,7 +77,6 @@ h5{ font-size:1.05rem; }
 a{ color:var(--dv-verde-escuro); text-decoration:none; }
 a:hover{ color:var(--dv-verde); }
 
-/* ---------- Cabeçalho ---------- */
 
 .dv-topo{
   background:var(--dv-grafite);
@@ -126,10 +114,8 @@ a:hover{ color:var(--dv-verde); }
 }
 .dv-nav-links a:hover{ color:var(--dv-verde-escuro); border-bottom-color:var(--dv-verde); }
 
-/* A trilha: fio de gradiente sob a navegação, ecoando o check do logo */
 .dv-trilha{ height:3px; background:var(--dv-trilha); }
 
-/* ---------- Layout ---------- */
 
 .dv-main{ flex:1 0 auto; padding:2.5rem 0 3.5rem; }
 .container{ max-width:1180px; }
@@ -138,7 +124,6 @@ a:hover{ color:var(--dv-verde); }
 .page-header h2{ margin-bottom:.4rem; }
 .page-header p{ color:var(--dv-suave); max-width:62ch; margin-bottom:0; }
 
-/* ---------- Cartões ---------- */
 
 .card,.dv-card{
   background:var(--dv-branco);
@@ -166,7 +151,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-dado dt{ color:var(--dv-suave); font-weight:400; font-size:.87rem; }
 .dv-dado dd{ margin:0; font-weight:600; color:var(--dv-tinta); text-align:right; }
 
-/* ---------- Hero ---------- */
 
 .dv-hero{
   background:var(--dv-grafite);
@@ -196,7 +180,6 @@ a:hover{ color:var(--dv-verde); }
 }
 .dv-hero-lista span{ font-size:.85rem; color:#9CA69C; }
 
-/* ---------- Etapas (trilha de progresso) ---------- */
 
 .dv-etapas{ list-style:none; display:flex; gap:0; padding:0; margin:0 0 2rem; }
 .dv-etapas li{ flex:1; padding-top:.75rem; border-top:3px solid var(--dv-linha); padding-right:1.25rem; }
@@ -213,7 +196,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-etapas li.feita{ border-top-color:var(--dv-verde-escuro); }
 .dv-etapas li.feita .dv-etapa-t{ color:var(--dv-texto); }
 
-/* ---------- Formulários ---------- */
 
 .form-label,label{
   font-size:.8rem; font-weight:500; color:var(--dv-texto);
@@ -251,7 +233,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-campo-input .form-control.money:focus + .dv-moeda{ color:var(--dv-verde-escuro); }
 .form-text,small.text-muted{ font-size:.76rem; color:var(--dv-suave)!important; }
 
-/* ---------- Painéis (accordion) ---------- */
 
 .accordion{ --bs-accordion-border-color:var(--dv-linha); border-radius:var(--dv-raio); overflow:hidden; border:1px solid var(--dv-linha); background:var(--dv-branco); }
 .accordion-item{ border:0; border-bottom:1px solid var(--dv-linha); background:transparent; }
@@ -275,7 +256,6 @@ a:hover{ color:var(--dv-verde); }
   margin:-.4rem 0 1.4rem; padding-left:.8rem; border-left:2px solid var(--dv-verde);
 }
 
-/* ---------- Botões ---------- */
 
 .btn{
   font-family:'Jost',sans-serif; font-weight:500; letter-spacing:.01em;
@@ -317,7 +297,6 @@ a:hover{ color:var(--dv-verde); }
   padding:1rem 0; margin-top:1.75rem;
 }
 
-/* ---------- Tabelas ---------- */
 
 .table{
   --bs-table-bg:transparent;
@@ -341,7 +320,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-col-destaque{ background:#F6FAF1; }
 .dv-valor-neutro{ color:var(--dv-suave); font-style:normal; font-size:.8rem!important; font-family:'Inter',sans-serif!important; }
 
-/* ---------- Selos ---------- */
 
 .badge,.dv-selo{
   font-family:'Jost',sans-serif; font-weight:500; font-size:.72rem;
@@ -351,7 +329,6 @@ a:hover{ color:var(--dv-verde); }
 .badge.bg-secondary,.dv-selo--neutro{ background:#EDF0EC!important; color:var(--dv-texto)!important; }
 .badge.bg-success,.dv-selo--rec{ background:var(--dv-verde-escuro)!important; color:#fff!important; }
 
-/* ---------- Resultado ---------- */
 
 .dv-resumo{
   background:var(--dv-grafite); color:#E7EBE7;
@@ -381,7 +358,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-kpi--novo{ border-left:3px solid var(--dv-verde); }
 .dv-kpi--novo .dv-kpi-val{ color:var(--dv-verde-escuro); }
 
-/* ---------- Processando ---------- */
 
 .dv-carregando{ max-width:520px; margin:4rem auto; text-align:center; }
 .dv-pulso{
@@ -393,13 +369,11 @@ a:hover{ color:var(--dv-verde); }
 }
 @keyframes dv-gira{ to{ transform:rotate(360deg); } }
 
-/* ---------- Alertas ---------- */
 
 .alert{ border-radius:var(--dv-raio-sm); border:1px solid var(--dv-linha); font-size:.9rem; }
 .alert-danger{ background:#FDF4F3; border-color:#F0D5D2; color:var(--dv-alerta); }
 .alert-danger ul{ padding-left:1.1rem; }
 
-/* ---------- Rodapé ---------- */
 
 .dv-rodape{
   background:var(--dv-grafite); color:#8E988E;
@@ -409,7 +383,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-rodape a{ color:#C9D0C9; }
 .dv-rodape a:hover{ color:var(--dv-lima); }
 
-/* ---------- Acessibilidade / responsivo ---------- */
 
 :focus-visible{ outline:2px solid var(--dv-verde); outline-offset:2px; }
 
