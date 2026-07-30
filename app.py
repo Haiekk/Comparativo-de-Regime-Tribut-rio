@@ -51,7 +51,6 @@ def percentual(valor):
     v = num(valor)
     return round(v * 100 if abs(v) <= 1 else v, 2)
 
-
 def identificar_regime_atual(rotulo):
     rotulo = (rotulo or "").lower()
     if "presumido" in rotulo:
@@ -145,8 +144,6 @@ def montar_resumo(resultado_calc, avisos=None):
     meta = resultado_calc.get("meta", {})
     avisos = list(avisos or [])
 
-    # Regime atual = informado pela empresa; recomendado = decidido pelo motor
-    # (maior lucro entre os elegíveis, já respeitando o teto do Simples).
     prefixo_atual = identificar_regime_atual(session["empresa"].get("regime_atual"))
     prefixo_novo = meta.get("regime_recomendado")
 
