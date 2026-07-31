@@ -44,7 +44,6 @@ body{
   flex-direction:column;
 }
 
-
 h1,h2,h3,h4,h5,.dv-display{
   font-family:'Jost',system-ui,sans-serif;
   color:var(--dv-tinta);
@@ -76,7 +75,6 @@ h5{ font-size:1.05rem; }
 
 a{ color:var(--dv-verde-escuro); text-decoration:none; }
 a:hover{ color:var(--dv-verde); }
-
 
 .dv-topo{
   background:var(--dv-grafite);
@@ -116,14 +114,12 @@ a:hover{ color:var(--dv-verde); }
 
 .dv-trilha{ height:3px; background:var(--dv-trilha); }
 
-
 .dv-main{ flex:1 0 auto; padding:2.5rem 0 3.5rem; }
 .container{ max-width:1180px; }
 
 .page-header{ margin-bottom:1.75rem; }
 .page-header h2{ margin-bottom:.4rem; }
 .page-header p{ color:var(--dv-suave); max-width:62ch; margin-bottom:0; }
-
 
 .card,.dv-card{
   background:var(--dv-branco);
@@ -150,7 +146,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-dado:last-child{ border-bottom:0; }
 .dv-dado dt{ color:var(--dv-suave); font-weight:400; font-size:.87rem; }
 .dv-dado dd{ margin:0; font-weight:600; color:var(--dv-tinta); text-align:right; }
-
 
 .dv-hero{
   background:var(--dv-grafite);
@@ -180,7 +175,6 @@ a:hover{ color:var(--dv-verde); }
 }
 .dv-hero-lista span{ font-size:.85rem; color:#9CA69C; }
 
-
 .dv-etapas{ list-style:none; display:flex; gap:0; padding:0; margin:0 0 2rem; }
 .dv-etapas li{ flex:1; padding-top:.75rem; border-top:3px solid var(--dv-linha); padding-right:1.25rem; }
 .dv-etapas li .dv-etapa-n{
@@ -195,7 +189,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-etapas li.ativa .dv-etapa-t{ color:var(--dv-tinta); font-weight:500; }
 .dv-etapas li.feita{ border-top-color:var(--dv-verde-escuro); }
 .dv-etapas li.feita .dv-etapa-t{ color:var(--dv-texto); }
-
 
 .form-label,label{
   font-size:.8rem; font-weight:500; color:var(--dv-texto);
@@ -233,7 +226,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-campo-input .form-control.money:focus + .dv-moeda{ color:var(--dv-verde-escuro); }
 .form-text,small.text-muted{ font-size:.76rem; color:var(--dv-suave)!important; }
 
-
 .accordion{ --bs-accordion-border-color:var(--dv-linha); border-radius:var(--dv-raio); overflow:hidden; border:1px solid var(--dv-linha); background:var(--dv-branco); }
 .accordion-item{ border:0; border-bottom:1px solid var(--dv-linha); background:transparent; }
 .accordion-item:last-child{ border-bottom:0; }
@@ -255,7 +247,6 @@ a:hover{ color:var(--dv-verde); }
   font-size:.82rem; color:var(--dv-suave);
   margin:-.4rem 0 1.4rem; padding-left:.8rem; border-left:2px solid var(--dv-verde);
 }
-
 
 .btn{
   font-family:'Jost',sans-serif; font-weight:500; letter-spacing:.01em;
@@ -297,7 +288,6 @@ a:hover{ color:var(--dv-verde); }
   padding:1rem 0; margin-top:1.75rem;
 }
 
-
 .table{
   --bs-table-bg:transparent;
   color:var(--dv-texto); margin-bottom:0; font-size:.9rem;
@@ -320,7 +310,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-col-destaque{ background:#F6FAF1; }
 .dv-valor-neutro{ color:var(--dv-suave); font-style:normal; font-size:.8rem!important; font-family:'Inter',sans-serif!important; }
 
-
 .badge,.dv-selo{
   font-family:'Jost',sans-serif; font-weight:500; font-size:.72rem;
   letter-spacing:.08em; text-transform:uppercase;
@@ -328,7 +317,6 @@ a:hover{ color:var(--dv-verde); }
 }
 .badge.bg-secondary,.dv-selo--neutro{ background:#EDF0EC!important; color:var(--dv-texto)!important; }
 .badge.bg-success,.dv-selo--rec{ background:var(--dv-verde-escuro)!important; color:#fff!important; }
-
 
 .dv-resumo{
   background:var(--dv-grafite); color:#E7EBE7;
@@ -358,7 +346,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-kpi--novo{ border-left:3px solid var(--dv-verde); }
 .dv-kpi--novo .dv-kpi-val{ color:var(--dv-verde-escuro); }
 
-
 .dv-carregando{ max-width:520px; margin:4rem auto; text-align:center; }
 .dv-pulso{
   width:64px; height:64px; margin:0 auto 1.8rem; border-radius:50%;
@@ -369,11 +356,9 @@ a:hover{ color:var(--dv-verde); }
 }
 @keyframes dv-gira{ to{ transform:rotate(360deg); } }
 
-
 .alert{ border-radius:var(--dv-raio-sm); border:1px solid var(--dv-linha); font-size:.9rem; }
 .alert-danger{ background:#FDF4F3; border-color:#F0D5D2; color:var(--dv-alerta); }
 .alert-danger ul{ padding-left:1.1rem; }
-
 
 .dv-rodape{
   background:var(--dv-grafite); color:#8E988E;
@@ -382,7 +367,6 @@ a:hover{ color:var(--dv-verde); }
 .dv-rodape .container{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; align-items:center; }
 .dv-rodape a{ color:#C9D0C9; }
 .dv-rodape a:hover{ color:var(--dv-lima); }
-
 
 :focus-visible{ outline:2px solid var(--dv-verde); outline-offset:2px; }
 

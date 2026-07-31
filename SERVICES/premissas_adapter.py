@@ -24,7 +24,6 @@ MAPA_NUMERICO = {
     "ticket_alim":            "ticket_alimentacao",     
 }
 
-
 def montar_premissas(dados: dict) -> Premissas:
     numericos = {
         campo_premissa: parse_moeda(dados.get(campo_form))

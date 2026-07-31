@@ -19,7 +19,7 @@ class Premissas:
     desp_alimentacao: float = 0.0           
     outras_desp_operacionais: float = 0.0   
 
-    bases_credito: list = field(default_factory=list)  # C18:D28
+    bases_credito: list = field(default_factory=list)  
 
     salario_bruto: float = 0.0   
     ticket_alim: float = 0.0     

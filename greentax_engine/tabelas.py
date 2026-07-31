@@ -34,7 +34,6 @@ PRESUMIDO_BASE_IRPJ_SERVICOS = 0.32
 PRESUMIDO_BASE_CSLL_COMERCIO = 0.12
 PRESUMIDO_BASE_CSLL_SERVICOS = 0.32
 
-
 def faixa_simples(tabela, rbt12):
 
     escolhida = tabela[0]

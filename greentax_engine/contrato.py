@@ -1,6 +1,5 @@
 from .models import Premissas
 
-
 def _despesas_dre(p: Premissas) -> dict:
     return {
         "aluguel": p.desp_aluguel,
@@ -12,7 +11,6 @@ def _despesas_dre(p: Premissas) -> dict:
         "alimentacao": p.desp_alimentacao,
         "outras": p.outras_desp_dedutiveis + p.outras_desp_operacionais,
     }
-
 
 def montar(p: Premissas, s: dict, pr: dict, r: dict, recomendado: dict) -> dict:
     receita = p.fat_total
@@ -81,7 +79,7 @@ def montar(p: Premissas, s: dict, pr: dict, r: dict, recomendado: dict) -> dict:
         "simples_das": -s["das_total"],
         "simples_icms": 0.0, "simples_iss": 0.0, "simples_pis": 0.0, "simples_cofins": 0.0,
     })
-    simples_rec_liq = receita + (-s["das_total"])  # = receita + SUM(tributos negativos)
+    simples_rec_liq = receita + (-s["das_total"])  
     dre["simples_receita_liquida"] = simples_rec_liq
     dre["simples_cmv"] = -p.compras_revenda
     simples_lucro_bruto = simples_rec_liq + (-p.compras_revenda)

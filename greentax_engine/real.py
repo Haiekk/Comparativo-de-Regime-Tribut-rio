@@ -3,12 +3,10 @@ from .creditos import creditos_pis_cofins
 from .folha import custo_folha_presumido_real
 from . import tabelas as t
 
-
 def _despesas_operacionais(p: Premissas) -> float:
     return (p.outras_desp_dedutiveis + p.desp_aluguel + p.desp_mat_consumo
             + p.desp_mat_limpeza + p.desp_energia + p.desp_financeiras
             + p.desp_combustivel + p.desp_alimentacao + p.outras_desp_operacionais)
-
 
 def calcular(p: Premissas) -> dict:
     cred_pis, cred_cofins = creditos_pis_cofins(p)

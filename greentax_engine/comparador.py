@@ -4,10 +4,8 @@ from . import tabelas as t
 
 PREFIXOS = ("simples", "presumido", "real")
 
-
 def _formatar_reais(v):
     return f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
 
 def comparar(p: Premissas) -> dict:
     s = simples.calcular(p)

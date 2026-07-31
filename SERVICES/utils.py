@@ -3,7 +3,6 @@ import re
 
 logger = logging.getLogger(__name__)
 
-
 def parse_moeda(valor):
     if valor is None:
         return 0.0
@@ -37,7 +36,6 @@ def parse_moeda(valor):
         logger.warning("Valor monetário não reconhecido: %r", valor)
         return 0.0
 
-
 def num(valor, padrao=0.0):
     if valor is None or valor == "":
         return padrao
@@ -46,7 +44,6 @@ def num(valor, padrao=0.0):
     if isinstance(valor, (int, float)):
         return float(valor)
     return parse_moeda(valor)
-
 
 def texto(valor, padrao=""):
     if valor is None:

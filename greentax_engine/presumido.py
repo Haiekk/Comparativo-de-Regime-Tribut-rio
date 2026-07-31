@@ -2,7 +2,6 @@ from .models import Premissas
 from .folha import custo_folha_presumido_real
 from . import tabelas as t
 
-
 def calcular(p: Premissas) -> dict:
     base_irpj = (p.fat_comercio * t.PRESUMIDO_BASE_IRPJ_COMERCIO
                  + p.fat_servicos * t.PRESUMIDO_BASE_IRPJ_SERVICOS)
