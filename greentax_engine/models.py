@@ -32,4 +32,4 @@ class Premissas:
 
     @property
     def fat_total(self) -> float:
-        return self.fat_comercio + self.fat_servicos + self.fat_sem_nota  # B13
+        return self.fat_comercio + self.fat_servicos + self.fat_sem_nota  

@@ -1,18 +1,15 @@
 import logging
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_session import Session
 
 from SERVICES.calculo_service import processar
+from SERVICES.cnpj_service import consultar_cnpj, cnpj_valido
+from SERVICES.premissas_adapter import CAMPOS_PREMISSAS
 from SERVICES.utils import parse_moeda, num, texto
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-app = Flask(
-    __name__,
-    static_folder=os.path.join(BASE_DIR, "static"),
-    template_folder=os.path.join(BASE_DIR, "templates"),
-)
+app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao")
 
 app.config["SESSION_TYPE"] = "filesystem"
@@ -28,17 +25,6 @@ NOMES_REGIMES = {
     "presumido": "Lucro Presumido",
     "real": "Lucro Real",
 }
-
-CAMPOS_PREMISSAS = [
-    "receita_comercio", "receita_servicos", "receita_sem_nota", "rbt12",
-    "mercadorias_revenda", "aluguel_pj", "frete_compras", "frete_vendas",
-    "servicos_terceiros", "combustiveis", "epis", "energia", "depreciacao",
-    "ferramentas", "outras_despesas",
-    "compras", "despesas_operacionais", "despesas_aluguel", "materiais_consumo",
-    "materiais_limpeza", "despesas_energia", "despesas_financeiras",
-    "despesas_combustivel",
-    "folha_pagamento", "ticket_alimentacao",
-]
 
 def formatar_moeda(valor):
     try:
@@ -79,20 +65,37 @@ def validar_premissas(form):
 def dashboard():
     return render_template("index.html")
 
+@app.route("/consulta-cnpj/<cnpj>")
+def consulta_cnpj(cnpj):
+    """Consulta a Receita (via Brasil API) e devolve os dados para autopreencher."""
+    resultado = consultar_cnpj(cnpj)
+    status = 200 if resultado.get("ok") else 422
+    return jsonify(resultado), status
+
 @app.route("/novo", methods=["GET", "POST"])
 def novo_planejamento():
     if request.method == "POST":
         razao_social = (request.form.get("razao_social") or "").strip()
+        cnpj = (request.form.get("cnpj") or "").strip()
+
+        erros = []
         if not razao_social:
+            erros.append("Informe a razão social.")
+        if not cnpj:
+            erros.append("Informe o CNPJ.")
+        elif not cnpj_valido(cnpj):
+            erros.append("CNPJ inválido. Confira os dígitos informados.")
+
+        if erros:
             return render_template(
                 "novo_planejamento.html",
-                erro="Informe a razão social.",
+                erros=erros,
                 form=request.form,
             )
 
         session["empresa"] = {
             "razao_social": razao_social,
-            "cnpj": (request.form.get("cnpj") or "").strip(),
+            "cnpj": cnpj,
             "email": (request.form.get("email") or "").strip(),
             "cidade": (request.form.get("cidade") or "").strip(),
             "estado": (request.form.get("estado") or "").strip(),
@@ -105,7 +108,6 @@ def novo_planejamento():
 
 @app.route("/premissas", methods=["GET", "POST"])
 def premissas():
-
     if "empresa" not in session:
         return redirect(url_for("novo_planejamento"))
 
@@ -241,6 +243,7 @@ def montar_tabela_dre(resultado_calc):
 
     for rotulo, sufixo, tipo in LINHAS_DRE:
         linha = {"rotulo": rotulo}
+        eh_abatimento = rotulo.strip().startswith("(-)")
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
 
@@ -249,7 +252,10 @@ def montar_tabela_dre(resultado_calc):
             elif tipo == "pct":
                 linha[p] = {"is_das": False, "valor": f"{percentual(valor)}%"}
             else:
-                linha[p] = {"is_das": False, "valor": f"R$ {formatar_moeda(num(valor))}"}
+                v = num(valor)
+                if eh_abatimento:
+                    v = abs(v)
+                linha[p] = {"is_das": False, "valor": f"R$ {formatar_moeda(v)}"}
 
         linhas.append(linha)
 

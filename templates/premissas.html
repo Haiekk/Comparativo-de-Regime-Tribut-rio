@@ -40,20 +40,20 @@
 
 <div class="accordion" id="accordionPremissas">
 
+<!-- ===================================================== -->
+<!-- RECEITAS -->
+<!-- ===================================================== -->
+
 <div class="accordion-item">
 
     <h2 class="accordion-header">
-
         <button
             class="accordion-button"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#receitas">
-
             Receitas
-
         </button>
-
     </h2>
 
     <div
@@ -68,75 +68,28 @@
             <div class="row g-4">
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Receita comércio
-
-                    </label>
-
+                    <label class="form-label">Receita comércio</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="receita_comercio"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="receita_comercio" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Receita serviços
-
-                    </label>
-
+                    <label class="form-label">Receita serviços</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="receita_servicos"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="receita_servicos" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        RBT12
-
-                    </label>
-
+                    <label class="form-label">RBT12</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="rbt12"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="rbt12" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
-                    <small class="text-muted">
-
-                        Receita bruta dos últimos 12 meses.
-
-                    </small>
-
+                    <small class="text-muted">Receita bruta dos últimos 12 meses.</small>
                 </div>
 
             </div>
@@ -147,297 +100,20 @@
 
 </div>
 
-<div class="accordion-item">
-
-    <h2 class="accordion-header">
-
-        <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#creditos">
-
-            Créditos tributários
-
-        </button>
-
-    </h2>
-
-    <div
-        id="creditos"
-        class="accordion-collapse collapse"
-        data-bs-parent="#accordionPremissas">
-
-        <div class="accordion-body">
-
-            <p class="dv-painel-nota">Entradas que geram crédito de PIS/COFINS e ICMS no Lucro Real.</p>
-
-            <div class="row g-4">
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Compras de mercadoria para revenda
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="mercadorias_revenda"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Aluguel (pessoa jurídica)
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="aluguel_pj"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Frete sobre compras
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="frete_compras"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Frete sobre vendas
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="frete_vendas"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Serviços de terceiros
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="servicos_terceiros"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Combustíveis e lubrificantes
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="combustiveis"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        EPIs
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="epis"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Energia elétrica
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="energia"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 dv-campo">
-
-                    <label class="form-label">
-
-                        Depreciação
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="depreciacao"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Ferramentas
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="ferramentas"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Outras despesas
-
-                    </label>
-
-                    <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="outras_despesas"
-                            placeholder="0,00">
-
-                        <span class="dv-moeda">R$</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+<!-- ===================================================== -->
+<!-- CUSTOS E DESPESAS (quadro unificado) -->
+<!-- ===================================================== -->
 
 <div class="accordion-item">
 
     <h2 class="accordion-header">
-
         <button
             class="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#custos">
-
             Custos e despesas
-
         </button>
-
     </h2>
 
     <div
@@ -447,184 +123,123 @@
 
         <div class="accordion-body">
 
-            <p class="dv-painel-nota">Saídas do período usadas na apuração do resultado.</p>
+            <p class="dv-painel-nota">
+                Custos e despesas do período. O sistema identifica automaticamente
+                quais geram crédito de PIS/COFINS no Lucro Real.
+            </p>
 
             <div class="row g-4">
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Compras
-
-                    </label>
-
+                    <label class="form-label">Compras de mercadoria para revenda</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="compras"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="compras_revenda" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Despesas operacionais
-
-                    </label>
-
+                    <label class="form-label">Aluguel (pessoa jurídica)</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="despesas_operacionais"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="aluguel_pj" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Aluguel
-
-                    </label>
-
+                    <label class="form-label">Frete sobre compras</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="despesas_aluguel"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="frete_compras" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Materiais de consumo
-
-                    </label>
-
+                    <label class="form-label">Frete sobre vendas</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="materiais_consumo"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="frete_vendas" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Materiais de limpeza
-
-                    </label>
-
+                    <label class="form-label">Serviços de terceiros</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="materiais_limpeza"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="servicos_terceiros" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Energia
-
-                    </label>
-
+                    <label class="form-label">Energia elétrica</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="despesas_energia"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="energia" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Despesas financeiras
-
-                    </label>
-
+                    <label class="form-label">Combustíveis e lubrificantes</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="despesas_financeiras"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="combustiveis" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Combustíveis
-
-                    </label>
-
+                    <label class="form-label">EPIs</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="despesas_combustivel"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="epis" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
+                </div>
 
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Depreciação</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="depreciacao" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Ferramentas</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="ferramentas" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Materiais de consumo e embalagens</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="materiais_consumo" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Materiais de conservação e limpeza</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="materiais_limpeza" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Despesas financeiras</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="despesas_financeiras" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 dv-campo">
+                    <label class="form-label">Outras despesas operacionais</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="outras_dedutiveis" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
                 </div>
 
             </div>
@@ -635,20 +250,20 @@
 
 </div>
 
+<!-- ===================================================== -->
+<!-- FOLHA DE PAGAMENTO -->
+<!-- ===================================================== -->
+
 <div class="accordion-item">
 
     <h2 class="accordion-header">
-
         <button
             class="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#folha">
-
             Folha de pagamento
-
         </button>
-
     </h2>
 
     <div
@@ -663,47 +278,19 @@
             <div class="row g-4">
 
                 <div class="col-lg-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Salário mensal (base para cálculo de encargos)
-
-                    </label>
-
+                    <label class="form-label">Salário mensal (base para cálculo de encargos)</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="folha_pagamento"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="folha_pagamento" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
                 <div class="col-lg-6 dv-campo">
-
-                    <label class="form-label">
-
-                        Ticket alimentação
-
-                    </label>
-
+                    <label class="form-label">Ticket alimentação</label>
                     <div class="dv-campo-input">
-
-                        <input
-                            type="text"
-                            class="form-control money"
-                            name="ticket_alimentacao"
-                            placeholder="0,00">
-
+                        <input type="text" class="form-control money" name="ticket_alimentacao" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
-
                     </div>
-
                 </div>
 
             </div>
@@ -716,24 +303,24 @@
 
 </div>
 
+<!-- ===================================================== -->
+<!-- BOTÕES -->
+<!-- ===================================================== -->
+
 <div class="dv-acoes-barra">
     <div class="dv-acoes m-0">
 
         <a
             href="{{ url_for('novo_planejamento') }}"
             class="btn btn-outline-secondary btn-lg">
-
             ← Voltar
-
         </a>
 
         <button
             type="submit"
             class="btn btn-primary btn-lg"
             data-carregando="Calculando…">
-
             Calcular comparativo →
-
         </button>
 
     </div>
