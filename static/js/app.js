@@ -62,9 +62,9 @@ if (cnpj) {
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
-          preencherSeVazio("razao_social", data.dados.razao_social);
-          preencherSeVazio("cidade", data.dados.cidade);
-          preencherSeVazio("email", data.dados.email);
+          preencherCampo("razao_social", data.dados.razao_social);
+          preencherCampo("cidade", data.dados.cidade);
+          preencherCampo("email", data.dados.email);
           selecionarEstado(data.dados.estado);
           definirStatusCnpj("Dados encontrados e preenchidos.", "sucesso");
         } else {
@@ -91,12 +91,11 @@ if (cnpj) {
     });
   }
 
-  function preencherSeVazio(id, valor) {
+  function preencherCampo(id, valor) {
     const el = document.getElementById(id);
-    if (el && !el.value.trim() && valor) {
-      el.value = valor;
-      el.classList.add("preenchido");
-    }
+    if (!el) return;
+    el.value = valor || "";
+    el.classList.toggle("preenchido", el.value.trim() !== "");
   }
 
   function selecionarEstado(uf) {

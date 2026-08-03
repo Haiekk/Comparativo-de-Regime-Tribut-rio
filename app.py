@@ -67,7 +67,6 @@ def dashboard():
 
 @app.route("/consulta-cnpj/<cnpj>")
 def consulta_cnpj(cnpj):
-    """Consulta a Receita (via Brasil API) e devolve os dados para autopreencher."""
     resultado = consultar_cnpj(cnpj)
     status = 200 if resultado.get("ok") else 422
     return jsonify(resultado), status
