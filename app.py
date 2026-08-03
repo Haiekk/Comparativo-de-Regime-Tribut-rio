@@ -4,10 +4,10 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_session import Session
 
-from SERVICES.calculo_service import processar
-from SERVICES.cnpj_service import consultar_cnpj, cnpj_valido
-from SERVICES.premissas_adapter import CAMPOS_PREMISSAS
-from SERVICES.utils import parse_moeda, num, texto
+from services.calculo_service import processar
+from services.cnpj_service import consultar_cnpj, cnpj_valido
+from services.premissas_adapter import CAMPOS_PREMISSAS
+from services.utils import parse_moeda, num, texto
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao")
