@@ -1,7 +1,6 @@
 from .models import Premissas
 
 def _despesas_dre(p: Premissas) -> dict:
-    """Linhas de despesa da DRE — idênticas nos três regimes (B/C/D iguais)."""
     return {
         "aluguel": p.desp_aluguel,
         "consumo": p.desp_mat_consumo,
