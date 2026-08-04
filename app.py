@@ -62,7 +62,7 @@ def validar_premissas(form, prefixo_regime, incluir_simples):
         if rbt12 <= 0:
             erros.append("O RBT12 é obrigatório e deve ser maior que zero — ele define a faixa de alíquota do Simples Nacional.")
         elif rbt12 < receita:
-            avisos.append("O RBT12 informado é menor que o faturamento do mês. Confira: ele deve somar os últimos 12 meses.")
+            erros.append("O RBT12 informado é menor que o faturamento do mês. Confira: ele deve somar os últimos 12 meses.")
 
     return erros, avisos
 
@@ -233,7 +233,6 @@ LINHAS_DRE = [
     ("Margem Líquida (% sobre a Receita)", "margem", "pct"),
 ]
 
-
 def montar_tabela_comparativo(resultado_calc):
     origens = {
         "detalhamento": resultado_calc.get("detalhamento", {}),
@@ -270,7 +269,7 @@ def montar_tabela_dre(resultado_calc):
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
 
-            if valor is None:                     # Simples não incluído -> traço
+            if valor is None:                     
                 linha[p] = {"is_das": False, "valor": "—"}
             elif p == "simples" and sufixo in tributos_simples and num(valor) == 0:
                 linha[p] = {"is_das": True, "valor": ""}
