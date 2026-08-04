@@ -85,8 +85,9 @@
                     </div>
                 </div>
 
+                {% if prefixo_regime == 'simples' %}
                 <div class="col-lg-3 col-md-6 dv-campo">
-                    <label class="form-label">RBT12</label>
+                    <label class="form-label">RBT12 *</label>
                     <div class="dv-campo-input">
                         <input type="text" class="form-control money" name="rbt12"
                             value="{{ form.get('rbt12', '') }}" placeholder="0,00">
@@ -94,6 +95,40 @@
                     </div>
                     <small class="text-muted">Receita bruta dos últimos 12 meses.</small>
                 </div>
+                {% else %}
+                <div class="col-12 dv-campo">
+                    <label class="form-label">Deseja comparar com o Simples Nacional? *</label>
+                    <div id="comparar-simples-grupo">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="comparar_simples"
+                                id="comparar_sim" value="sim"
+                                {% if form.get('comparar_simples') == 'sim' %}checked{% endif %}>
+                            <label class="form-check-label" for="comparar_sim">Sim</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="comparar_simples"
+                                id="comparar_nao" value="nao"
+                                {% if form.get('comparar_simples') == 'nao' %}checked{% endif %}>
+                            <label class="form-check-label" for="comparar_nao">Não</label>
+                        </div>
+                    </div>
+                    <small class="text-muted">
+                        Avaliamos se o Simples Nacional seria mais vantajoso do que o seu regime atual.
+                    </small>
+                </div>
+
+                <div class="col-lg-4 col-md-6 dv-campo" id="rbt12-container" style="display:none;">
+                    <label class="form-label">RBT12 *</label>
+                    <div class="dv-campo-input">
+                        <input type="text" class="form-control money" name="rbt12"
+                            value="{{ form.get('rbt12', '') }}" placeholder="0,00">
+                        <span class="dv-moeda">R$</span>
+                    </div>
+                    <small class="text-danger">
+                        Para comparar com o Simples, informe a receita bruta dos últimos 12 meses (obrigatório).
+                    </small>
+                </div>
+                {% endif %}
 
             </div>
 

@@ -45,7 +45,7 @@ def identificar_regime_atual(rotulo):
         return "real"
     return "simples"
 
-def validar_premissas(form):
+def validar_premissas(form, prefixo_regime, incluir_simples):
     erros, avisos = [], []
 
     receita = sum(parse_moeda(form.get(c)) for c in
@@ -54,10 +54,15 @@ def validar_premissas(form):
 
     if receita <= 0:
         erros.append("Informe ao menos uma receita (comércio, serviços ou sem nota).")
-    if rbt12 <= 0:
-        erros.append("O RBT12 é obrigatório e deve ser maior que zero — ele define a faixa de alíquota do Simples Nacional.")
-    elif rbt12 < receita:
-        avisos.append("O RBT12 informado é menor que o faturamento do mês. Confira: ele deve somar os últimos 12 meses.")
+
+    if prefixo_regime != "simples" and form.get("comparar_simples") not in ("sim", "nao"):
+        erros.append("Informe se deseja comparar com o Simples Nacional.")
+
+    if incluir_simples:
+        if rbt12 <= 0:
+            erros.append("O RBT12 é obrigatório e deve ser maior que zero — ele define a faixa de alíquota do Simples Nacional.")
+        elif rbt12 < receita:
+            avisos.append("O RBT12 informado é menor que o faturamento do mês. Confira: ele deve somar os últimos 12 meses.")
 
     return erros, avisos
 
@@ -70,6 +75,7 @@ def consulta_cnpj(cnpj):
     resultado = consultar_cnpj(cnpj)
     status = 200 if resultado.get("ok") else 422
     return jsonify(resultado), status
+
 
 @app.route("/novo", methods=["GET", "POST"])
 def novo_planejamento():
@@ -105,30 +111,41 @@ def novo_planejamento():
 
     return render_template("novo_planejamento.html", form={})
 
+
 @app.route("/premissas", methods=["GET", "POST"])
 def premissas():
     if "empresa" not in session:
         return redirect(url_for("novo_planejamento"))
 
-    if request.method == "GET":
-        return render_template("premissas.html", form={})
+    prefixo_regime = identificar_regime_atual(session["empresa"].get("regime_atual"))
 
-    erros, avisos = validar_premissas(request.form)
+    if request.method == "GET":
+        return render_template("premissas.html", form={}, prefixo_regime=prefixo_regime)
+
+    if prefixo_regime == "simples":
+        incluir_simples = True
+    else:
+        incluir_simples = request.form.get("comparar_simples") == "sim"
+
+    erros, avisos = validar_premissas(request.form, prefixo_regime, incluir_simples)
     if erros:
-        return render_template("premissas.html", erros=erros, form=request.form)
+        return render_template("premissas.html", erros=erros, form=request.form,
+                               prefixo_regime=prefixo_regime)
 
     session["premissas"] = {c: request.form.get(c) for c in CAMPOS_PREMISSAS}
+    session["incluir_simples"] = incluir_simples
 
     dados = {**session["empresa"], **session["premissas"]}
 
     try:
-        resultado_calc = processar(dados)
+        resultado_calc = processar(dados, incluir_simples=incluir_simples)
     except Exception:
         app.logger.exception("Falha no cálculo do comparativo")
         return render_template(
             "premissas.html",
             erros=["Não foi possível concluir o cálculo. Revise as premissas e tente novamente."],
             form=request.form,
+            prefixo_regime=prefixo_regime,
         )
 
     avisos = avisos + resultado_calc["meta"]["avisos"]
@@ -138,6 +155,7 @@ def premissas():
     session["tabela_dre"] = montar_tabela_dre(resultado_calc)
 
     return redirect(url_for("resultado"))
+
 
 def montar_resumo(resultado_calc, avisos=None):
     comparativo = resultado_calc.get("comparativo", {})
@@ -215,6 +233,7 @@ LINHAS_DRE = [
     ("Margem Líquida (% sobre a Receita)", "margem", "pct"),
 ]
 
+
 def montar_tabela_comparativo(resultado_calc):
     origens = {
         "detalhamento": resultado_calc.get("detalhamento", {}),
@@ -228,7 +247,12 @@ def montar_tabela_comparativo(resultado_calc):
         linha = {"rotulo": rotulo}
         for p in PREFIXOS:
             valor = origem.get(f"{p}_{sufixo}")
-            linha[p] = f"{percentual(valor)}%" if tipo == "pct" else formatar_moeda(num(valor))
+            if valor is None:                     
+                linha[p] = "—"
+            elif tipo == "pct":
+                linha[p] = f"{percentual(valor)}%"
+            else:
+                linha[p] = formatar_moeda(num(valor))
         tabela.append(linha)
 
     recomendado = {p: bool(texto(comparativo.get(f"{p}_recomendado"))) for p in PREFIXOS}
@@ -246,7 +270,9 @@ def montar_tabela_dre(resultado_calc):
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
 
-            if p == "simples" and sufixo in tributos_simples and num(valor) == 0:
+            if valor is None:                     # Simples não incluído -> traço
+                linha[p] = {"is_das": False, "valor": "—"}
+            elif p == "simples" and sufixo in tributos_simples and num(valor) == 0:
                 linha[p] = {"is_das": True, "valor": ""}
             elif tipo == "pct":
                 linha[p] = {"is_das": False, "valor": f"{percentual(valor)}%"}

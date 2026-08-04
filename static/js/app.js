@@ -84,7 +84,7 @@ if (cnpj) {
       const erro = erroCnpj(cnpj.value);
       if (erro) {
         e.preventDefault();
-        e.stopImmediatePropagation(); // impede o handler que desabilita o botão
+        e.stopImmediatePropagation(); 
         definirStatusCnpj(erro, "erro");
         cnpj.focus();
       }
@@ -122,6 +122,23 @@ if (cnpj) {
     alvo.textContent = mensagem;
   }
 }
+
+(function () {
+  const radios = document.querySelectorAll('input[name="comparar_simples"]');
+  const container = document.getElementById("rbt12-container");
+  if (radios.length === 0 || !container) return;
+
+  function atualizar() {
+    let escolha = "";
+    radios.forEach((r) => {
+      if (r.checked) escolha = r.value;
+    });
+    container.style.display = escolha === "sim" ? "" : "none";
+  }
+
+  radios.forEach((r) => r.addEventListener("change", atualizar));
+  atualizar(); 
+})();
 
 document.querySelectorAll(".money").forEach(function (input) {
   input.addEventListener("input", function (e) {
