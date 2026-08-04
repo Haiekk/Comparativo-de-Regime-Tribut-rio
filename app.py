@@ -72,7 +72,10 @@ def dashboard():
 
 @app.route("/sitemap.xml")
 def sitemap():
-    paginas = [url_for("dashboard", _external=True)]
+    paginas = [
+        url_for("dashboard", _external=True),
+        url_for("novo_planejamento", _external=True),
+        ]
     urls = "".join(f"<url><loc>{p}</loc></url>" for p in paginas)
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>'
