@@ -104,7 +104,6 @@ def montar(p: Premissas, s: dict, pr: dict, r: dict, recomendado: dict) -> dict:
         dre[f"{pfx}_lucro_bruto"] = rec_liq - cmv
         dre[f"{pfx}_pessoal"] = res["folha"]
 
-    lucros = {"simples": lucro_simples, "presumido": lucro_presumido, "real": lucro_real}
     irpj_map = {"simples": 0.0, "presumido": -pr["irpj_total"], "real": -r["irpj_total"]}
     csll_map = {"simples": 0.0, "presumido": -pr["csll"], "real": -r["csll"]}
 
