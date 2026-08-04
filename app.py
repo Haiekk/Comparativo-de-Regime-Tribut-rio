@@ -1,7 +1,7 @@
 import logging
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, Response
 from flask_session import Session
 
 from services.calculo_service import processar
@@ -70,12 +70,31 @@ def validar_premissas(form, prefixo_regime, incluir_simples):
 def dashboard():
     return render_template("index.html")
 
+@app.route("/sitemap.xml")
+def sitemap():
+    paginas = [url_for("dashboard", _external=True)]
+    urls = "".join(f"<url><loc>{p}</loc></url>" for p in paginas)
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        f"{urls}</urlset>"
+    )
+    return Response(xml, mimetype="application/xml")
+
+@app.route("/robots.txt")
+def robots():
+    conteudo = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {url_for('sitemap', _external=True)}\n"
+    )
+    return Response(conteudo, mimetype="text/plain")
+
 @app.route("/consulta-cnpj/<cnpj>")
 def consulta_cnpj(cnpj):
     resultado = consultar_cnpj(cnpj)
     status = 200 if resultado.get("ok") else 422
     return jsonify(resultado), status
-
 
 @app.route("/novo", methods=["GET", "POST"])
 def novo_planejamento():
@@ -110,7 +129,6 @@ def novo_planejamento():
         return redirect(url_for("premissas"))
 
     return render_template("novo_planejamento.html", form={})
-
 
 @app.route("/premissas", methods=["GET", "POST"])
 def premissas():
@@ -269,7 +287,7 @@ def montar_tabela_dre(resultado_calc):
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
 
-            if valor is None:                     
+            if valor is None:                     # Simples não incluído -> traço
                 linha[p] = {"is_das": False, "valor": "—"}
             elif p == "simples" and sufixo in tributos_simples and num(valor) == 0:
                 linha[p] = {"is_das": True, "valor": ""}
