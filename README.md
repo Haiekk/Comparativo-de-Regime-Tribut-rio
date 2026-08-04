@@ -8,7 +8,8 @@ comparativa lado a lado.
 
 O motor de cálculo é escrito em **Python puro**. Toda a lógica tributária foi
 migrada de uma planilha Excel para código, validada célula a célula contra a
-planilha de origem, eliminando a dependência de `xlwings`/Excel.
+planilha de origem, eliminando a dependência de `xlwings`/Excel e tornando o
+sistema publicável em qualquer hospedagem Linux.
 
 ---
 
@@ -44,8 +45,8 @@ O fluxo de uma simulação:
 Formulário (HTML)
     -> app.py (rota /premissas)
     -> SERVICES/calculo_service.processar(dados)
-        -> SERVICES/premissas_adapter.montar_premissas(dados)   
-        -> greentax_engine.comparar(premissas)                  
+        -> SERVICES/premissas_adapter.montar_premissas(dados)   # form -> Premissas
+        -> greentax_engine.comparar(premissas)                  # calcula os 3 regimes
     -> app.py formata (montar_resumo / montar_tabela_*)
     -> templates/resultado.html
 ```
@@ -78,8 +79,8 @@ COMPARATIVO DE REGIME/
 │   ├── __init__.py
 │   ├── utils.py                # parse_moeda, num, texto
 │   ├── premissas_adapter.py    # formulário -> Premissas
-│   └── calculo_service.py      # processar(dados): ponto de entrada do cálculo
-│
+│   ├── calculo_service.py      # processar(dados): ponto de entrada do cálculo
+│   └── cnpj_service.py         # busca dados da empresa pelo cnpj
 ├── static/
 │   ├── css/style.css
 │   ├── img/logo.png
