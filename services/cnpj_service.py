@@ -5,7 +5,7 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-URL_BASE = "https://api.opencnpj.org/"
+URL_BASE = "https://brasilapi.com.br/api/cnpj/v1/"
 TIMEOUT = 8
 
 _PESOS_DV1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]

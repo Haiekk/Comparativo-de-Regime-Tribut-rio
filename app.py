@@ -15,6 +15,15 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_FILE_DIR"] = os.path.join(app.root_path, "flask_session")
+
+"""
+Atenção: A conta gratuita do PythonAnywhere tem um limite de 512 MB de armazenamento.
+Como estamos salvando as sessões em disco, com o tempo essa pasta flask_session pode crescer
+e consumir o espaço. Vale a pena criar uma rotina simples (pode ser uma task nas "Tasks"
+do PythonAnywhere) para apagar arquivos muito antigos dessa pasta, ou usar em sessões baseadas
+em cookies e os dados da sessão não forem muito grandes.
+"""
+
 Session(app)
 
 logging.basicConfig(level=logging.INFO)
