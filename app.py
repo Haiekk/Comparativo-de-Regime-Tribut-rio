@@ -8,6 +8,7 @@ from services.calculo_service import processar
 from services.cnpj_service import consultar_cnpj, cnpj_valido
 from services.premissas_adapter import CAMPOS_PREMISSAS
 from services.utils import parse_moeda, num, texto
+from services.sheets_service import registrar_lead
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-troque-em-producao")
@@ -103,7 +104,7 @@ def consulta_cnpj(cnpj):
 @app.route("/novo", methods=["GET", "POST"])
 def novo_planejamento():
     if request.method == "POST":
-        razao_social = (request.form.get("razao_social") or "").strip()
+        razao_social = (request.form.get("razao_social") or "").strip()[:150]
         cnpj = (request.form.get("cnpj") or "").strip()
 
         erros = []
@@ -124,12 +125,20 @@ def novo_planejamento():
         session["empresa"] = {
             "razao_social": razao_social,
             "cnpj": cnpj,
-            "email": (request.form.get("email") or "").strip(),
-            "cidade": (request.form.get("cidade") or "").strip(),
+            "email": (request.form.get("email") or "").strip()[:254],
+            "cidade": (request.form.get("cidade") or "").strip()[:100],
             "estado": (request.form.get("estado") or "").strip(),
             "atividade": (request.form.get("atividade") or "").strip(),
             "regime_atual": (request.form.get("regime_atual") or "").strip(),
+            "telefone": (request.form.get("telefone") or "").strip(),
+            "celular": (request.form.get("celular") or "").strip(),
         }
+
+        try:
+            registrar_lead(session["empresa"])
+        except Exception:
+            app.logger.exception("Falha ao registrar lead na planilha")
+
         return redirect(url_for("premissas"))
 
     return render_template("novo_planejamento.html", form={})

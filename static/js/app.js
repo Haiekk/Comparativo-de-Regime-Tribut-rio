@@ -65,6 +65,7 @@ if (cnpj) {
           preencherCampo("razao_social", data.dados.razao_social);
           preencherCampo("cidade", data.dados.cidade);
           preencherCampo("email", data.dados.email);
+          preencherCampo("telefone", data.dados.telefone);
           selecionarEstado(data.dados.estado);
           definirStatusCnpj("Dados encontrados e preenchidos.", "sucesso");
         } else {
