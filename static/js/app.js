@@ -65,7 +65,7 @@ if (cnpj) {
           preencherCampo("razao_social", data.dados.razao_social);
           preencherCampo("cidade", data.dados.cidade);
           preencherCampo("email", data.dados.email);
-          preencherCampo("telefone", data.dados.telefone);
+          preencherCampo("telefone", mascararTelefone(data.dados.telefone || ""));
           selecionarEstado(data.dados.estado);
           definirStatusCnpj("Dados encontrados e preenchidos.", "sucesso");
         } else {
@@ -123,6 +123,28 @@ if (cnpj) {
     alvo.textContent = mensagem;
   }
 }
+
+function mascararTelefone(valor) {
+  const digitos = valor.replace(/\D/g, "").substring(0, 11);
+  if (digitos.length <= 10) {
+    return digitos
+      .replace(/^(\d{0,2})/, "($1")
+      .replace(/^\((\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{4})(\d{1,4})$/, "$1-$2");
+  }
+  return digitos
+    .replace(/^(\d{0,2})/, "($1")
+    .replace(/^\((\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+}
+
+["telefone", "celular"].forEach((id) => {
+  const campo = document.getElementById(id);
+  if (!campo) return;
+  campo.addEventListener("input", (e) => {
+    e.target.value = mascararTelefone(e.target.value);
+  });
+});
 
 (function () {
   const radios = document.querySelectorAll('input[name="comparar_simples"]');

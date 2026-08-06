@@ -13,7 +13,7 @@ def comparar(p: Premissas, incluir_simples: bool = True) -> dict:
 
     receita = p.fat_total
     desp = (p.desp_aluguel + p.desp_mat_consumo + p.desp_mat_limpeza + p.desp_energia
-            + p.desp_financeiras + p.desp_combustivel + p.desp_alimentacao
+            + p.desp_financeiras + p.desp_combustivel
             + p.outras_desp_dedutiveis + p.outras_desp_operacionais)
 
     lucros = {

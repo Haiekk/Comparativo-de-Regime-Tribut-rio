@@ -286,12 +286,15 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 dv-campo">
-                    <label class="form-label">Outras despesas operacionais</label>
+                    <label class="form-label">Outras despesas dedutíveis</label>
                     <div class="dv-campo-input">
                         <input type="text" class="form-control money" name="outras_dedutiveis"
                             value="{{ form.get('outras_dedutiveis', '') }}" placeholder="0,00">
                         <span class="dv-moeda">R$</span>
                     </div>
+                    <small class="text-muted">
+                        Outros custos que geram crédito de PIS/COFINS no Lucro Real (confirme com seu contador se o item se enquadra).
+                    </small>
                 </div>
 
             </div>

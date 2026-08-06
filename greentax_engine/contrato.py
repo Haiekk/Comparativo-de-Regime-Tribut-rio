@@ -8,10 +8,8 @@ def _despesas_dre(p: Premissas) -> dict:
         "energia": p.desp_energia,
         "financeiras": p.desp_financeiras,
         "combustivel": p.desp_combustivel,
-        "alimentacao": p.desp_alimentacao,
         "outras": p.outras_desp_dedutiveis + p.outras_desp_operacionais,
     }
-
 
 def montar(p: Premissas, s, pr: dict, r: dict, recomendado: dict) -> dict:
     tem_simples = s is not None
@@ -82,7 +80,7 @@ def montar(p: Premissas, s, pr: dict, r: dict, recomendado: dict) -> dict:
     sufixos_dre = [
         "receita_bruta", "das", "icms", "iss", "pis", "cofins", "receita_liquida",
         "cmv", "lucro_bruto", "pessoal", "aluguel", "consumo", "limpeza", "energia",
-        "financeiras", "combustivel", "alimentacao", "outras", "resultado_antes",
+        "financeiras", "combustivel", "outras", "resultado_antes",
         "irpj", "csll", "lucro_liquido", "margem",
     ]
 

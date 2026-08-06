@@ -19,6 +19,13 @@
 <!-- AVISOS -->
 <!-- ===================================================== -->
 
+{% if resultado.ja_otimizado %}
+<div class="alert alert-success" role="alert">
+    <strong>Sua empresa já está no regime mais vantajoso entre os avaliados</strong> —
+    {{ resultado.regime_atual }} segue sendo a melhor opção considerando as premissas informadas.
+</div>
+{% endif %}
+
 {% if resultado.avisos %}
 <div class="alert alert-warning" role="alert">
     <ul class="mb-0">

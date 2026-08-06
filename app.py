@@ -37,7 +37,7 @@ def formatar_moeda(valor):
 
 def percentual(valor):
     v = num(valor)
-    return round(v * 100 if abs(v) <= 1 else v, 2)
+    return round(v * 100, 2)
 
 def identificar_regime_atual(rotulo):
     rotulo = (rotulo or "").lower()
@@ -232,7 +232,6 @@ LINHAS_DRE = [
     ("(-) Despesas Energia Elétrica", "energia", "moeda"),
     ("(-) Despesas Financeiras", "financeiras", "moeda"),
     ("(-) Despesas Combustível", "combustivel", "moeda"),
-    ("(-) Despesas Alimentação", "alimentacao", "moeda"),
     ("(-) Outras Despesas Operacionais", "outras", "moeda"),
     ("(=) RESULTADO ANTES DE IRPJ/CSLL", "resultado_antes", "moeda"),
     ("(-) IRPJ (+ adicional)", "irpj", "moeda"),

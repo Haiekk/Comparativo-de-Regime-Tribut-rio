@@ -6,7 +6,7 @@ from . import tabelas as t
 def _despesas_operacionais(p: Premissas) -> float:
     return (p.outras_desp_dedutiveis + p.desp_aluguel + p.desp_mat_consumo
             + p.desp_mat_limpeza + p.desp_energia + p.desp_financeiras
-            + p.desp_combustivel + p.desp_alimentacao + p.outras_desp_operacionais)
+            + p.desp_combustivel + p.outras_desp_operacionais)
 
 def calcular(p: Premissas) -> dict:
     cred_pis, cred_cofins = creditos_pis_cofins(p)
@@ -22,7 +22,7 @@ def calcular(p: Premissas) -> dict:
     iss = (p.fat_servicos + p.fat_sem_nota) * p.iss
 
     receita_liquida = p.fat_total - (icms_debito + iss + pis_debito + cofins_debito)
-    cmv_liquido = p.compras_revenda - icms_credito - cred_pis - cred_cofins
+    cmv_liquido = p.compras_revenda - icms_credito
     lucro_bruto = receita_liquida - cmv_liquido
     folha = custo_folha_presumido_real(p)
     lucro_real = lucro_bruto - folha - _despesas_operacionais(p)

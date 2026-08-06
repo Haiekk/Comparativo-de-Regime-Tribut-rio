@@ -11,20 +11,20 @@ MAPA_DIRETO = {
 }
 
 CUSTOS_DESPESAS = [
-    ("compras_revenda",      "compras_revenda",        True), 
-    ("aluguel_pj",           "desp_aluguel",           True),
-    ("frete_compras",        None,                     True),   
-    ("frete_vendas",         None,                     True),  
-    ("servicos_terceiros",   None,                     True),  
-    ("energia",              "desp_energia",           True),
-    ("combustiveis",         "desp_combustivel",       True),
-    ("epis",                 None,                     True),   
-    ("depreciacao",          None,                     True),   
-    ("ferramentas",          None,                     True),   
-    ("materiais_consumo",    "desp_mat_consumo",       False),  
-    ("materiais_limpeza",    "desp_mat_limpeza",       False), 
-    ("despesas_financeiras", "desp_financeiras",       False),  
-    ("outras_dedutiveis",    "outras_desp_dedutiveis", True),   
+    ("compras_revenda",      "compras_revenda",          True),
+    ("aluguel_pj",           "desp_aluguel",             True),
+    ("frete_compras",        "outras_desp_operacionais", True),
+    ("frete_vendas",         "outras_desp_operacionais", True),
+    ("servicos_terceiros",   "outras_desp_operacionais", True),
+    ("energia",              "desp_energia",             True),
+    ("combustiveis",         "desp_combustivel",         True),
+    ("epis",                 "outras_desp_operacionais", True),
+    ("depreciacao",          "outras_desp_operacionais", True),
+    ("ferramentas",          "outras_desp_operacionais", True),
+    ("materiais_consumo",    "desp_mat_consumo",         False),
+    ("materiais_limpeza",    "desp_mat_limpeza",         False),
+    ("despesas_financeiras", "desp_financeiras",         False),
+    ("outras_dedutiveis",    "outras_desp_dedutiveis",   True),
 ]
 
 def montar_premissas(dados: dict) -> Premissas:
@@ -37,7 +37,7 @@ def montar_premissas(dados: dict) -> Premissas:
     for campo_form, premissa_dre, gera_credito in CUSTOS_DESPESAS:
         valor = parse_moeda(dados.get(campo_form))
         if premissa_dre is not None:
-            valores[premissa_dre] = valor
+            valores[premissa_dre] = valores.get(premissa_dre, 0.0) + valor
         if gera_credito:
             bases_credito.append(valor)
 

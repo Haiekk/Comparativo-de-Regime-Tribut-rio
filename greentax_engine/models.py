@@ -16,7 +16,6 @@ class Premissas:
     desp_energia: float = 0.0               
     desp_financeiras: float = 0.0           
     desp_combustivel: float = 0.0           
-    desp_alimentacao: float = 0.0           
     outras_desp_operacionais: float = 0.0   
 
     bases_credito: list = field(default_factory=list)  
@@ -32,4 +31,4 @@ class Premissas:
 
     @property
     def fat_total(self) -> float:
-        return self.fat_comercio + self.fat_servicos + self.fat_sem_nota  
+        return self.fat_comercio + self.fat_servicos + self.fat_sem_nota
