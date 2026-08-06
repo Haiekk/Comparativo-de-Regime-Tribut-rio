@@ -1,7 +1,7 @@
 import logging
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_session import Session
 
 from services.calculo_service import processar
@@ -71,29 +71,6 @@ def validar_premissas(form, prefixo_regime, incluir_simples):
 @app.route("/")
 def dashboard():
     return render_template("index.html")
-
-@app.route("/sitemap.xml")
-def sitemap():
-    paginas = [
-        url_for("dashboard", _external=True),
-        url_for("novo_planejamento", _external=True),
-        ]
-    urls = "".join(f"<url><loc>{p}</loc></url>" for p in paginas)
-    xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"{urls}</urlset>"
-    )
-    return Response(xml, mimetype="application/xml")
-
-@app.route("/robots.txt")
-def robots():
-    conteudo = (
-        "User-agent: *\n"
-        "Allow: /\n"
-        f"Sitemap: {url_for('sitemap', _external=True)}\n"
-    )
-    return Response(conteudo, mimetype="text/plain")
 
 @app.route("/consulta-cnpj/<cnpj>")
 def consulta_cnpj(cnpj):
