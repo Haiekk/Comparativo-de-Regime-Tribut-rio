@@ -300,7 +300,7 @@ def montar_tabela_dre(resultado_calc):
         for p in PREFIXOS:
             valor = dre.get(f"{p}_{sufixo}")
 
-            if valor is None:                     # Simples não incluído -> traço
+            if valor is None:                    
                 linha[p] = {"is_das": False, "valor": "—"}
             elif p == "simples" and sufixo in tributos_simples and num(valor) == 0:
                 linha[p] = {"is_das": True, "valor": ""}
