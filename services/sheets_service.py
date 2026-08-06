@@ -12,7 +12,8 @@ def _client():
 
 def registrar_lead(dados):
     sh = _client().open_by_key(os.environ["GOOGLE_SHEET_ID"]).sheet1
-    sh.append_row([
+
+    linha = [
         dados.get("razao_social"),
         dados.get("cnpj"),
         dados.get("email"),
@@ -20,4 +21,7 @@ def registrar_lead(dados):
         dados.get("celular"),
         dados.get("cidade"),
         dados.get("estado"),
-    ])
+    ]
+
+    proxima_linha = len(sh.get_all_values()) + 1
+    sh.update(f"A{proxima_linha}", [linha], value_input_option="USER_ENTERED")
