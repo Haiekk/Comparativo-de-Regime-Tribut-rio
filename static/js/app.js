@@ -66,6 +66,7 @@ if (cnpj) {
           preencherCampo("cidade", data.dados.cidade);
           preencherCampo("email", data.dados.email);
           preencherCampo("telefone", mascararTelefone(data.dados.telefone || ""));
+          preencherCampo("celular", mascararTelefone(data.dados.celular || ""));
           selecionarEstado(data.dados.estado);
           definirStatusCnpj("Dados encontrados e preenchidos.", "sucesso");
         } else {
@@ -126,6 +127,7 @@ if (cnpj) {
 
 function mascararTelefone(valor) {
   const digitos = valor.replace(/\D/g, "").substring(0, 11);
+  if (!digitos) return "";
   if (digitos.length <= 10) {
     return digitos
       .replace(/^(\d{0,2})/, "($1")

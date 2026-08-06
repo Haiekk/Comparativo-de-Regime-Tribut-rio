@@ -39,18 +39,32 @@ def cnpj_valido(cnpj):
     return c[12] == str(dv1) and c[13] == str(dv2)
 
 
-def _telefone_principal(telefones):
-    """Primeiro telefone não-fax cadastrado na Receita. Não tenta classificar
-    fixo/celular: esse dado não é confiável na fonte (auto-declarado)."""
+def _classificar_telefones(telefones):
+    fixo, celular, formato_inesperado = "", "", ""
+
     for t in telefones or []:
         if t.get("is_fax"):
             continue
-        ddd = (t.get("ddd") or "").strip()
-        numero = (t.get("numero") or "").strip()
-        if ddd and numero:
-            return f"({ddd}) {numero}"
-    return ""
+        ddd = re.sub(r"\D", "", t.get("ddd") or "")
+        numero = re.sub(r"\D", "", t.get("numero") or "")
+        if not ddd or not numero:
+            continue
 
+        primeiro_digito = numero[0]
+
+        if len(numero) == 9 and primeiro_digito == "9" and not celular:
+            celular = ddd + numero
+        elif len(numero) == 8 and primeiro_digito in "6789" and not celular:
+            celular = ddd + "9" + numero
+        elif len(numero) == 8 and primeiro_digito in "2345" and not fixo:
+            fixo = ddd + numero
+        elif not formato_inesperado:
+            formato_inesperado = ddd + numero
+
+    if not fixo and not celular and formato_inesperado:
+        fixo = formato_inesperado
+
+    return fixo, celular
 
 def consultar_cnpj(cnpj_bruto):
     cnpj = _limpar_cnpj(cnpj_bruto)
@@ -85,11 +99,14 @@ def consultar_cnpj(cnpj_bruto):
     municipio = (d.get("municipio") or "").strip()
     uf = (d.get("uf") or "").strip()
 
+    fixo, celular = _classificar_telefones(d.get("telefones"))
+
     dados = {
         "razao_social": (d.get("razao_social") or "").strip()[:150],
         "cidade": municipio[:100],
         "estado": uf,
         "email": (d.get("email") or "").strip()[:254],
-        "telefone": _telefone_principal(d.get("telefones")),
+        "telefone": fixo,
+        "celular": celular,
     }
     return {"ok": True, "dados": dados}
